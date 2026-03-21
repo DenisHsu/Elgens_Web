@@ -1,0 +1,491 @@
+/* =========================
+   ELGENS HEADER (CSS)
+   ========================= */
+
+.elgens-header {
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+/* container */
+.elgens-header .container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* classic bottom line */
+.elgens-header .classic {
+  border-bottom: 2px solid #e6e6e6;
+  position: relative;
+}
+
+.elgens-header .classic:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 4px;
+  background: var(--line);
+  box-shadow: 0 2px 6px rgba(229, 139, 30, 0.35);
+}
+
+/* brand */
+.elgens-header .brand {
+  display: flex;
+  align-items: center;
+}
+
+.elgens-header .brand img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+/* hamburger toggle */
+.elgens-header .nav-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 44px;
+  height: 36px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.elgens-header .nav-toggle .bar {
+  width: 20px;
+  height: 2px;
+  background: #111;
+}
+
+.elgens-header .nav-toggle[aria-expanded="true"] .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.elgens-header .nav-toggle[aria-expanded="true"] .bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.elgens-header .nav-toggle[aria-expanded="true"] .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* nav wrapper */
+.elgens-header .elgens-nav {
+  position: relative;
+  margin-left: 20px;
+  flex: 1;
+  font-size: 19px;
+}
+
+/* menu base */
+.elgens-header .menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.elgens-header .menu .menu-item {
+  display: flex;
+}
+
+/* level-1 (desktop base) */
+.elgens-header .menu.level-1 {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.elgens-header .menu.level-1 > .menu-item {
+  display: flex !important;
+  align-items: center;
+  position: relative;
+  width: auto !important;
+}
+
+.elgens-header .menu.level-1 > .menu-item > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.elgens-header .menu.level-1 > .menu-item > a:hover {
+  color: #0d0d0d !important;
+}
+
+.elgens-header .menu.level-1 > .menu-item.has-children > a::after {
+  font-size: 0.8em;
+  color: #9aa1ab !important;
+  margin-left: 2px;
+}
+
+/* dropdown common (level-2~5) */
+.elgens-header .menu.level-2,
+.elgens-header .menu.level-3,
+.elgens-header .menu.level-4,
+.elgens-header .menu.level-5 {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  min-width: 280px;
+  background: #fff;
+  border: 1px solid #eef2f6;
+  border-radius: 12px;
+  display: none;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+.elgens-header .menu.level-2 a,
+.elgens-header .menu.level-3 a,
+.elgens-header .menu.level-4 a,
+.elgens-header .menu.level-5 a {
+  display: block;
+  padding: 10px 12px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.elgens-header .menu.level-2 a:hover,
+.elgens-header .menu.level-3 a:hover,
+.elgens-header .menu.level-4 a:hover,
+.elgens-header .menu.level-5 a:hover {
+  background: #f6f8fb;
+  color: #111 !important;
+}
+
+.elgens-header .menu.level-2 > .menu-item,
+.elgens-header .menu.level-3 > .menu-item,
+.elgens-header .menu.level-4 > .menu-item,
+.elgens-header .menu.level-5 > .menu-item {
+  position: relative;
+}
+
+.elgens-header .menu.level-2 > .menu-item.has-children > a::after,
+.elgens-header .menu.level-3 > .menu-item.has-children > a::after,
+.elgens-header .menu.level-4 > .menu-item.has-children > a::after,
+.elgens-header .menu.level-5 > .menu-item.has-children > a::after {
+  color: #a0a7b2;
+  margin-left: 0.4em;
+  font-size: 0.9em;
+}
+
+/* deeper dropdown position */
+.elgens-header .menu.level-3,
+.elgens-header .menu.level-4,
+.elgens-header .menu.level-5 {
+  left: 100%;
+  top: 0;
+}
+
+/* submenu toggle button */
+.elgens-header .submenu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: #9aa1ab;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 2px;
+}
+
+/* hide nested menu by default */
+.elgens-header .menu .has-children > .menu {
+  display: none;
+}
+
+/* ---------- Desktop hover behaviors ---------- */
+@media (min-width: 992px) {
+  .elgens-header .nav-toggle {
+    display: none;
+  }
+
+  .elgens-header .menu.level-1 {
+    display: flex !important;
+  }
+
+  .elgens-header .menu.level-1 > .menu-item:hover > .menu,
+  .elgens-header .menu.level-2 > .menu-item:hover > .menu,
+  .elgens-header .menu.level-3 > .menu-item:hover > .menu,
+  .elgens-header .menu.level-4 > .menu-item:hover > .menu {
+    display: block;
+  }
+
+  .elgens-header .submenu-toggle {
+    display: none;
+  }
+}
+
+/* ---------- Mobile base menu container ---------- */
+@media (max-width: 991.98px) {
+  .elgens-header .elgens-nav {
+    flex: unset;
+    width: 100%;
+  }
+
+  .elgens-header #elgens-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: none;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+
+  .elgens-header #elgens-menu.open {
+    display: block;
+  }
+
+  .elgens-header .menu.level-1 {
+    display: block !important;
+    padding: 8px;
+  }
+
+  .elgens-header .menu.level-1 > .menu-item {
+    display: block;
+    border-bottom: 1px solid #f1f3f5;
+  }
+
+  .elgens-header .menu.level-1 > .menu-item > a {
+    display: flex;
+    color: #ee7700; /* 原本是 $primary，CSS 改成固定色 */
+    justify-content: space-between;
+  }
+
+  .elgens-header .menu.level-2,
+  .elgens-header .menu.level-3,
+  .elgens-header .menu.level-4,
+  .elgens-header .menu.level-5 {
+    position: static;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .elgens-header .menu.level-2 a,
+  .elgens-header .menu.level-3 a,
+  .elgens-header .menu.level-4 a,
+  .elgens-header .menu.level-5 a {
+    padding: 12px 16px;
+  }
+
+  .elgens-header .menu.level-2 {
+    background: #fafbfc;
+    padding-left: 10px;
+  }
+
+  .elgens-header .menu.level-3 {
+    background: #f7f9fb;
+    padding-left: 10px;
+  }
+
+  .elgens-header .menu.level-4 {
+    background: #f5f7fa;
+    padding-left: 10px;
+  }
+
+  .elgens-header .menu.level-5 {
+    background: #f3f6fa;
+    padding-left: 10px;
+  }
+}
+
+/* link hover global */
+.elgens-header a:hover {
+  color: #0d0d0d;
+}
+
+/* =========================
+   LINK COLORS (Default + Hover)
+   ========================= */
+.elgens-nav .menu-item > a {
+  color: #ee7700;
+  transition: color 0.2s ease-in-out;
+}
+
+.elgens-nav .menu-item > a:hover {
+  color: #000000;
+}
+
+/* =========================
+   MOBILE ACCORDION STYLES
+   ========================= */
+@media (max-width: 991.98px) {
+  .elgens-nav .menu.level-2,
+  .elgens-nav .menu.level-3,
+  .elgens-nav .menu.level-4,
+  .elgens-nav .menu.level-5 {
+    position: static !important;
+    width: 100% !important;
+    display: none;
+    float: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background-color: #fff;
+  }
+
+  .elgens-nav .menu-item {
+    width: 100% !important;
+    float: none !important;
+    display: block;
+    border-bottom: 1px solid #eee;
+  }
+
+  .elgens-nav .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .elgens-nav .menu-item.has-children {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* expanded parent item */
+  .elgens-nav .menu-item:has(> .submenu-toggle[aria-expanded="true"]) {
+    border-bottom-color: #333;
+  }
+
+  .elgens-nav .menu-item:has(> .submenu-toggle[aria-expanded="true"]) > a,
+  .elgens-nav .menu-item:has(> .submenu-toggle[aria-expanded="true"]) > .submenu-toggle {
+    color: #fff;
+  }
+
+  /* background for expanded by level */
+  .elgens-nav .level-1 > .menu-item:has(> .submenu-toggle[aria-expanded="true"]),
+  .elgens-nav .level-2 > .menu-item:has(> .submenu-toggle[aria-expanded="true"]),
+  .elgens-nav .level-3 > .menu-item:has(> .submenu-toggle[aria-expanded="true"]),
+  .elgens-nav .level-4 > .menu-item:has(> .submenu-toggle[aria-expanded="true"]) {
+    background-color: #585858;
+  }
+
+  /* links and toggle buttons */
+  .elgens-nav .menu-item a {
+    flex-grow: 1;
+    padding: 12px 15px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+  }
+
+  .elgens-nav .submenu-toggle {
+    flex-shrink: 0;
+    margin-left: auto;
+    padding: 12px 15px;
+  }
+
+  /* indent submenu levels */
+  .elgens-nav .menu.level-3 a {
+    padding-left: 30px;
+  }
+
+  .elgens-nav .menu.level-4 a {
+    padding-left: 45px;
+  }
+
+  .elgens-nav .menu.level-5 a {
+    padding-left: 60px;
+  }
+
+  /* hide toggle button for first level when open */
+  .elgens-nav .level-1 > .menu-item:has(> .submenu-toggle[aria-expanded="true"]) > .submenu-toggle {
+    display: none;
+  }
+}
+
+/* =========================
+   DESKTOP MENU STYLES
+   ========================= */
+@media (min-width: 992px) {
+  .elgens-nav .submenu-toggle {
+    display: none;
+  }
+
+  .elgens-nav .menu-item {
+    position: relative;
+  }
+
+  .elgens-nav .menu ul {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding-left: 0;
+    min-width: 240px;
+    z-index: 999;
+  }
+
+  .elgens-nav .menu ul .menu-item {
+    width: 100%;
+    border-bottom: none;
+  }
+
+  .elgens-nav .menu-item:hover > ul {
+    display: block;
+  }
+
+  .elgens-nav .level-1 > .menu-item > .level-2 {
+    top: 100%;
+    left: 0;
+  }
+
+  .elgens-nav .level-2 > .menu-item > .level-3,
+  .elgens-nav .level-3 > .menu-item > .level-4,
+  .elgens-nav .level-4 > .menu-item > .level-5 {
+    top: -1px;
+    left: 100%;
+  }
+
+  .elgens-nav .menu ul a {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+  }
+
+  .elgens-nav .menu.level-2 > .menu-item > a {
+    padding-left: 20px;
+  }
+
+  .elgens-nav .menu.level-3 > .menu-item > a {
+    padding-left: 40px;
+  }
+
+  .elgens-nav .menu.level-4 > .menu-item > a {
+    padding-left: 60px;
+  }
+
+  .elgens-nav .menu.level-5 > .menu-item > a {
+    padding-left: 80px;
+  }
+}
