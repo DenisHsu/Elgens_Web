@@ -1,0 +1,1546 @@
+<!-- Elementor HTML Widget: LPC-D156-Series -->
+<!-- CSS Dependencies (add these to Elementor > Custom CSS or theme header if not already loaded) -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0">
+<link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+<link href="https://www.elgens.com.tw/new_Home/assets/css/bootstrap.css?dfbb9efafcf0b1187493a7e8" rel="stylesheet">
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<style>/* Source: css/style.css */
+/* ========================================Global======================================== */
+body{
+  font-family: "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+}
+body,
+section {
+  background-color: #fff;
+}
+
+h1,
+h2,
+h5,
+p,
+.text-muted {
+  color: #424551;
+}
+
+.orange {
+  color: #EE7700;
+}
+
+.fw-bold {
+  font-weight: 600 !important;
+}
+.section {
+  margin: 80px 0;
+}
+
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px); 
+  transition: all 0.8s ease-out;
+}
+
+
+.scroll-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ========================================Header======================================== */
+
+.elgens-header {
+  box-shadow: 0 2px 20px -10px rgba(0, 0, 0, 0.3);
+}
+
+.elgens-header.classic .elgens-nav .menu.level-1 > li > a {
+  display: inline-block !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  text-align: center;
+  padding: 0 1em !important;
+}
+
+
+/* ========================================Hero======================================== */
+
+.top-hero {
+  background: url("https://www.elgens.com.tw/wp-content/uploads/2026/03/header-texture.png") center/cover no-repeat;
+  padding: 40px 0;
+}
+
+.top-hero h1 {
+  font-size: 38px;
+  font-weight: 600;
+  color: #fff;
+}
+
+
+/* ========================================Breadcrumb======================================== */
+
+.breadcrumb-item.active {
+  color: #424551;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "|";
+  color: #9A9CA5;
+}
+
+
+/* =======================================Product======================================== */
+
+.main-product h2 {
+  font-size: 38px;
+}
+.main-product h5 {
+  font-size: 18px;
+}
+.product-section {
+  position: relative;
+  text-align: center;
+  padding: 40px 20px;
+  margin: 10px 60px;
+  background: url("https://www.elgens.com.tw/wp-content/uploads/2026/03/prduct-bg.png") center/cover no-repeat;
+}
+
+
+/* ========================================Features List======================================== */
+
+.features {
+  list-style: none;
+  padding-left: 0;
+}
+
+.features li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  color: #424551;
+}
+
+.features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  background: url("https://www.elgens.com.tw/wp-content/uploads/2026/03/bullet-icon.png") center/contain no-repeat;
+}
+
+
+/* ========================================Slider======================================== */
+
+.slider-container {
+  position: relative;
+  max-width: 800px;
+  margin: auto;
+}
+
+.slider {
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+}
+
+.slide.active {
+  display: block;
+}
+
+
+/* Navigation Arrows */
+
+.slider-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  color: #333;
+}
+.slider-nav:hover{
+  color: #EE7700;
+}
+.prev {
+  left: -80px;
+}
+
+.next {
+  right: -80px;
+}
+
+
+/* ========================================Thumbnails======================================== */
+
+.thumbnails {
+  margin-top: 40px;
+
+  justify-content: center;
+  gap: 20px;
+}
+
+.thumb,
+.thumb-img {
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.thumb {
+  width: 120px;
+  opacity: 0.5;
+  border-radius: 8px;
+}
+
+.thumb.active {
+  opacity: 1;
+  border-color: #EE7700;
+}
+
+.thumb-img:hover {
+  border-color: #EE7700;
+}
+
+/* ========================================Share-box======================================== */
+.share-box {
+  background: #d9d9d9;
+  padding: 15px 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.share-text {
+  font-weight: bold;
+  color: #333;
+}
+
+.icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #bfbfbf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.icon:hover {
+  background: #999;
+  color: #fff;
+}
+
+
+.side-label {
+  position: absolute;
+  right: 30px;
+  top: 30%;
+  height: auto;
+  width: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-right: 1px solid #EE7700;
+}
+
+.side-label span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 120px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.08);
+  letter-spacing: 6px;
+}
+.side-label.smaller span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 70px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.08);
+  letter-spacing: 6px;
+}
+.certification{
+    background: #cfc6bc;
+}
+.cert-slider {
+  overflow: hidden;
+  width: 100%;
+  background: #cfc6bc;
+  padding: 30px 0;
+}
+
+.cert-track {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+
+.cert-item {
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-item img {
+  height: 60px;
+  width: auto;
+}
+
+.certSwiper {
+  width: 100%;
+}
+
+.certSwiper .swiper-slide {
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.certSwiper .swiper-slide img {
+  height: 60px;
+  width: auto;
+}
+
+
+.table-responsive{
+  padding-top: 30px;
+}
+.custom-tabs .nav-item {
+  margin-right: 10px;
+  flex: 1; 
+  text-align: center;
+}
+
+.custom-tabs .nav-link {
+  font-size: 20px;
+  justify-content: center;
+  color: #7B7777;
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid #7B7777;
+  border-radius: 0;
+  padding: 12px 20px;
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.custom-tabs .nav-link::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("https://www.elgens.com.tw/wp-content/uploads/2026/03/tab-icon-o.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.custom-tabs .nav-link.active::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("https://www.elgens.com.tw/wp-content/uploads/2026/03/tab-icon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.custom-tabs .nav-link.active {
+
+  color: #1E212C !important;
+  background-color: #EE7700 !important; 
+  border-bottom-color: #EE7700 !important;
+}
+
+
+.custom-spec-table thead{
+  margin-top: 30px;
+}
+.custom-spec-table thead th {
+    margin-top: 30px;
+  font-size: 16px;
+  background-color: #555 !important;
+  font-weight: 500;
+  text-transform: none;
+  color: #fff;
+}
+
+.custom-spec-table tbody td.table-light {
+  background-color: #F0F0F0 !important;
+}
+
+.custom-spec-table td, .custom-spec-table th {
+  font-size: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.custom-spec-table tbody td {
+  border: none;
+}
+
+.table > :not(caption) > * > * {
+  background-color: #fff;
+}
+
+/* ========================================Tab-downland ======================================== */
+
+.download-card {
+  background: #ef7d00;
+  color: #fff;
+  height: 200px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.download-card.deep-blue{
+  background: #0b5777;
+}
+.download-card span{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.download-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.download-card img {
+  transition: 0.3s;
+}
+
+.download-card:hover img {
+  transform: scale(1.1);
+}
+
+
+.custom-close {
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+  opacity: 1;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1060;
+}
+.modal-body h4{
+  color: #1E212C;
+}
+.title-line {
+  height: 1px;
+  background-color:#ef7d00;
+}
+
+.cert-card-link {
+  text-decoration: none;
+}
+
+.cert-card {
+  border-radius: 8px;
+  background-color:#ef7d00;
+  color: white;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  padding: 15px;
+  text-align: center;
+}
+
+.cert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.cert-card span {
+  margin-top: 10px;
+  font-size:20px;
+}
+
+@media (max-width: 576px) {
+  .cert-card {
+    height: 110px;
+  }
+  .cert-card span {
+    font-size: 0.8rem;
+  }
+}
+
+.cta-section {
+  position: relative;
+  min-height: 342px;
+  background: url('https://www.elgens.com.tw/wp-content/uploads/2026/03/banner.png') center/cover no-repeat;
+  padding: 80px 0;
+}
+
+.position-relative h2{
+  color: #fff;
+}
+
+.position-relative p{
+  color: #fff;
+}
+.overlay::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.z-1 {
+  z-index: 1;
+}
+.btn-orange:hover {
+  background-color:#ef7d00;
+  color: #1E212C;
+}
+.btn-orange{
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-orange::before{
+  content: "";
+  position: absolute;
+  top: 0; left: -80%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.5),
+    transparent
+  );
+  transition: transform .6s ease;
+}
+
+.btn-orange:hover::before{
+  transform: translateX(260%);
+}
+p.lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.related-products {
+  background-color:#D7CEC6;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+
+.product-card {
+  transition: transform 0.3s ease;
+}
+.product-card p{
+  color: #1E212C;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.img-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img-container img{
+    height: 200px;
+    max-width: fit-content;
+}
+.btn-orange {
+  font-weight: 600;
+  background-color:#d67102;;
+  color: #1E212C;
+  border-radius: 0;
+  padding: 8px 25px;
+  font-size:16px;
+  border: none;
+}
+
+
+/* Navigation Arrows Styling */
+.carousel-controls .btn {
+  position: absolute;
+  top: 50%;
+  font-size: 2rem;
+  border: none;
+}
+
+.prev-arrow { left: 20px; }
+.next-arrow { right: 20px; }
+
+.footer-section {
+  background-color: #ffffff;
+  font-size: 16px; 
+  color: #1E212C;
+}
+
+.footer-section a {
+  transition: opacity 0.2s ease;
+}
+
+.footer-section a:hover {
+  opacity: 0.7;
+}
+
+.footer-section i {
+  font-size: 14px;
+}
+.footer-section .fa-facebook-f{
+  color: #0866FF;
+}
+.footer-section .fa-linkedin-in{
+  background-color: #0866FF;
+  color: #fff;
+  padding: 3px;
+}
+.footer-section .text-muted{
+  font-weight: 300;
+  padding: 0 5px;
+  color: #000 !important;
+}
+.modal-body{
+  background-size: cover;
+  background-image: url(https://www.elgens.com.tw/wp-content/uploads/2026/03/popup-bg.png);
+}
+.modal-body {
+  color: #EE7700;
+}
+.modal-content{
+  background-color: unset;
+  background-clip: unset;
+  border: 0;
+}
+
+.modal {
+      --bs-modal-width: 800px;
+}
+
+.preparing{
+  font-weight: bold;
+  font-size: 5.5rem;
+  color: rgba(0, 0, 0, 0.08);
+  text-align: center;
+  margin: 50px;
+}
+
+.product-section-wrapper {
+  position: sticky;
+  top: 100px; 
+}
+
+#goTop {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  background-color: #EE7700;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: none; 
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+#goTop:hover {
+  background-color: #EE7700;
+}
+
+.info-section {
+  border: 2px solid #ee7702;
+  padding: 30px;
+}
+.info-section h3{
+  margin-bottom: 10px;
+  color: #1E212C;
+}
+.info-section ul li{
+  color: #1E212C;
+}
+
+.product-swiper .swiper-slide {
+  height: auto;
+}
+
+.product-card {
+  height: 100%;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  display: none; 
+}
+
+.swiper-button-prev i {
+  transform: rotate(180deg);
+}
+
+.swiper-button-prev i,
+.swiper-button-next i {
+  font-size: 28px;
+  color: #EE7800;
+}
+.swiper-button-prev, .swiper-rtl .swiper-button-next{
+  left: 0;
+}
+.swiper-button-next, .swiper-rtl .swiper-button-prev{
+  right: 0;
+}
+.slider-nav svg{
+  width: 46px;
+  height: 46px;
+}
+
+@media (max-width: 1200px){
+  .custom-tabs .nav-link{
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 991px){
+  .custom-tabs .nav-link{
+    font-size: 14px;
+    padding: 12px 0px;
+  }
+}
+@media (max-width: 768px){
+  .custom-tabs .nav-item {
+    width: 47%;
+    flex: none;
+}
+.custom-tabs .nav-link {
+    padding: 12px 20px;
+}
+.section {
+    margin: 40px 0;
+}
+.table-responsive {
+    padding-top: 10px;
+}
+.img-container img{
+    height: 200px;
+    max-width: 100%;
+}
+ .custom-spec-table thead tr:last-child{
+  background-color: #555;
+ }
+.custom-spec-table td:last-child{
+  padding-top: 0;
+}
+}
+@media (max-width: 768px) {
+  .custom-spec-table tr {
+    display: block;
+  }
+
+  .custom-spec-table td {
+    display: block;
+    width: 100%;
+    padding-left: 1rem !important;
+  }
+  .custom-tabs .nav-link{
+      justify-content: flex-start;
+      border-bottom: 1px solid #7B7777;
+}
+.preparing{
+    font-size: 3.5rem;
+}
+}
+@media (max-width: 576px){
+.d-m-none{
+  display: none;
+}
+.preparing{
+    font-size: 2.5rem;
+}
+.thumbnails{
+  display: none;
+}
+.product-section{
+  margin: 0 ;
+}
+.breadcrumb-item{
+  font-size: 13px;
+}
+.side-label{
+  display: none;
+}
+.prev {
+  left: -10px;
+}
+
+.next {
+  right: -10px;
+}
+.product-section {
+  margin: 0;
+  padding: 0 20px;
+}
+.certSwiper .swiper-slide {
+    width: 90px;
+}
+}
+
+
+</style>
+
+<!-- Content Start -->
+<!-- Hero Section -->
+<section class="top-hero">
+  <div class="container">
+    <h1>LPC-D156 Series Defense Panel PC (15.6", PQC-Ready)</h1>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<div class="py-2 mb-4 mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 small">
+        <li class="breadcrumb-item"><a href="https://www.elgens.com.tw/">Home</a></li>
+        <li class="breadcrumb-item"><a href="https://www.elgens.com.tw/defense/">Defense</a></li>
+        <li class="breadcrumb-item"><a href="https://www.elgens.com.tw/defense/mil-std-461g/">MIL-STD-461G</a></li>
+        <li class="breadcrumb-item"><a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-pc/">Defense PC</a></li>
+        <li class="breadcrumb-item active">LPC-D156 Series</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- Product Section -->
+<section class="main-productpy-5">
+  <div class="side-label smaller ">
+    <span>LPC-D156 Series</span>
+  </div>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <div class="product-section-wrapper">
+        <div class="product-section">
+              <!-- Left Arrow -->
+            <button class="slider-nav prev">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+              </svg>
+            </button>
+          <div class="slider-container">
+            <!-- Main Image -->
+            <div class="slider">
+              <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/LPC-D240-1.png" class="slide active" />
+            </div>
+          </div>
+          <!-- Right Arrow -->
+          <button class="slider-nav next">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+              </svg>
+          </button>
+        </div>
+         <div class="thumbnails">
+          <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/LPC-D240-1.png" class="thumb active" data-index="0">
+        </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <h2 class="fw-bold mb-3">LPC-D156 Series</h2>
+        <p>
+          LPC-D156 Series is a mission-critical 15.6" P-cap defense Panel PC powered by Intel® 14th Gen processors and secured with NIST-approved Post-Quantum Cryptography (FIPS 203/204/205). Certified to MIL-STD-810H, 461G, 1275E, and 704F, it offers a 1500-nit anti-glare, optically bonded sunlight-readable display, rugged D38999 connectors, IP65 front protection, and -40°C to 70°C “Cold Start” capability. Designed for shipboard CIC, bridge consoles, shore-based C2 and C4ISR centers, aircraft maintenance hangars, and USV/UGV platforms, it ensures robust reliability in naval, airborne, and ground command operations.
+        </p>
+        <h5 class="orange mt-4 mb-3 fw-bold">Product Highlights - Advantages and Benefits</h5>
+        <ul class="features">
+            <li>
+                <b>PQC-Proof Quantum Security (Optional by Customer Request)</b>:
+                Integrates NIST FIPS 203/204/205 compliant Post-Quantum Cryptography (PQC) to protect sensitive data against
+                "Harvest Now, Decrypt Later" threats.
+            </li>
+            <li>
+                <b>Military-Grade Certification</b>:
+                Compliant with MIL-STD-704F, MIL-STD-1275E, and MIL-STD-461G for EMC/EMI compliance, as well as MIL-STD-810H
+                for shock and vibration resilience.
+            </li>
+            <li>
+                <b>Extreme Environment Reliability</b>:
+                Engineered for -40℃ to 70℃ environments with "Cold Start" technology, enabling immediate system boot-up in freezing conditions.
+            </li>
+            <li>
+                <b>Superior Outdoor Readability</b>:
+                Equipped with a 1500-nit ultra-bright display, optical bonding, and anti-glare technology for crystal-clear visibility under direct sunlight.
+            </li>
+            <li>
+                <b>Enhanced Durability and Resistance</b>:
+                The full metal chassis and tempered cover glass provides superior mechanical strength, offering exceptional protection against physical damage,
+                high-impact forces, and heavy vibrations common in industrial settings.
+            </li>
+            <li>
+                <b>Secure Connectivity</b>:
+                D38999/D26482 military connectors for all I/Os. Prevent accidental cable disconnection.
+            </li>
+            <li>
+                <b>Stable Supply</b>:
+                10-year longevity support and proactive notification of EOL.
+            </li>
+        </ul>
+        <div class="share-box">
+          <span class="share-text">Share:</span>
+
+          <a href="#" class="icon" id="fbShare" aria-label="Share on Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <a href="#" class="icon" id="liShare" aria-label="Share on Linkedin">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+
+          <a href="mailto:santiago@elgens.com.tw" target="_blank" class="icon">
+            <i class="far fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="section certification scroll-reveal">
+  <div class="container">
+    <div class="cert-slider">
+      <div class="swiper certSwiper">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/01/FIPS-203.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/01/FIPS-204.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/01/FIPS-205.png">
+          </div>
+
+           <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/1275E.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/704F.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/461G.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/810H.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/ukca.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/fcc.png">
+          </div>
+
+          <div class="swiper-slide cert-item">
+            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/conformite_europ.png">
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="product-intro scroll-reveal">
+  <div class="container mt-5">
+    <ul class="nav nav-tabs custom-tabs border-0" id="productTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="spec-tab" data-bs-toggle="tab" data-bs-target="#spec" type="button" role="tab">
+          <i class="bi bi-gear-fill me-2"></i>Specification
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="order-tab" data-bs-toggle="tab" data-bs-target="#order" type="button" role="tab">
+          <i class="bi bi-gear-fill me-2"></i>Ordering Info
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="download-tab" data-bs-toggle="tab" data-bs-target="#download" type="button" role="tab">
+          <i class="bi bi-gear-fill me-2"></i>Download
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="video-tab" data-bs-toggle="tab" data-bs-target="#video" type="button" role="tab">
+          <i class="bi bi-gear-fill me-2"></i>Video
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content pt-3 mb-5" id="productTabContent">
+      <div class="tab-pane fade show active" id="spec" role="tabpanel">
+        <div class="table-responsive">
+          <table class="table table-sm table-borderless align-middle custom-spec-table">
+            <thead>
+              <tr><th colspan="2" class="py-2 px-3">System</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold ps-3">CPU</td>
+                <td>Intel Gen. 14th Core i3/ i5/ i7 up to 35W Processors</td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3 table-light">System Memory</td>
+                <td class="table-light">2 x 262-pin SO-DIMM DDR5 4800/5600 MHz , up to 96GB (48GB per DIMM)</td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3">Storage</td>
+                <td>
+                  <ul class="list-unstyled mb-0">
+                    <li>1 x M.2 (Key M, 2242/2280) with PCIe Gen3 x4 for SSD</li>
+                    <li>2 x External 2.5" Storage Bay</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3 table-light">Operation System</td>
+                <td class="table-light">
+                  <ul class="list-unstyled mb-0">
+                    <li>Windows 10 (64-bit)</li>
+                    <li>Windows 11 (64-bit)</li>
+                    <li>Linux Yocto (64-bit, by request)</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3">Expansion</td>
+                <td>
+                  <ul class="list-unstyled mb-0">
+                    <li>1 x M.2 (Key E, 2230) for Optional Wireless Module</li>
+                    <li>1 x M.2 (Key B, 3042/3052) with SIM Slot for Optional 4G/5G Module</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3 table-light">OSD</td>
+                <td class="table-light">5-key OSD including Power key and Function keys</td>
+              </tr>
+            </tbody>
+            <thead>       
+              <tr><th colspan="2" class="pt-4" style="background-color: #fff !important;"></th></tr> 
+              <tr><th colspan="2" class="py-2 px-3">I/O Connect</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold ps-3" style="width: 200px;">External I/O Port</td>
+                <td>
+                  <ul class="list-unstyled mb-0">
+                    <li>1 x USB by D38999 Connector</li>
+                    <li>1 x 2.5 GbE LAN by D38999 Connector</li>
+                    <li>1 x HDMI by D38999 Connector</li>
+                    <li>1 x COM Port (RS-232/422/485) by D38999 Connector</li>
+                    <li>1 x DC Power Input by D26482/MS3114E8 Connector</li>
+                    <li>1 x Power Button</li>
+                    <li>1 x GND Screw for Safety Grounding</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+
+            <thead>
+              <tr><th colspan="2" class="py-2 px-3">LCD</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold ps-3">Display Type</td>
+                <td>15.6" TFT LCD</td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3 table-light">Max. Resolution</td>
+                <td class="table-light">1920*1080</td>
+              </tr>
+              <tr class="table-light">
+                <td class="fw-bold ps-3">Contrast Ratio</td>
+                <td>5000 : 1</td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3 table-light">Max. Color</td>
+                <td class="table-light">
+                  16.7M
+                </td>
+              </tr>
+              <tr class="table-light">
+                <td class="fw-bold ps-3">Luminance (cd/m2)</td>
+                <td>
+                  1500
+                </td>
+              </tr>
+              <tr class="table-light">
+                <td class="fw-bold ps-3 table-light">View Angle</td>
+                <td class="table-light" >
+                  89/89/89/89
+                </td>
+              </tr>
+            </tbody>
+
+            <thead>
+              <tr><th colspan="2" class="pt-4" style="background-color: #fff !important;"></th></tr> 
+              <tr><th colspan="2" class="py-2 px-3">Environment</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold ps-3">Power Input</td>
+                <td>DC 9~36V, 120W Power Input with MIL-STD-461G/1275E/704F Compliant</td>
+              </tr>
+              <tr class="table-light">
+                <td class="fw-bold ps-3 table-light">Dimension</td>
+                <td class="table-light">As the Drawing Shown in 3rd Page</td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3">Mounting</td>
+                <td>Flush Mount</td>
+              </tr>
+              <tr class="table-light">
+                <td class="fw-bold ps-3 table-light">Certification</td>
+                <td class="table-light">
+                  <strong>EMC</strong>
+                  <ul class="list-unstyled mb-0">
+                    <li>MIL-STD-461G Compliant (CE101/CE102/RE101/RE102)</li>
+                    <li>MIL-STD-1275E Compliant</li>
+                    <li>MIL-STD-704F Compliant</li>
+                    <li>FCC / CE Class A Certified</li>
+                  </ul>
+                  <strong>Vibration</strong>
+                  <ul class="list-unstyled mb-0">
+                    <li>MIL-STD-810H, Method 514.8, Procedure I</li>
+                    <li>IEC-60068-2-64, 1.5 Grms @10~500Hz</li>
+                  </ul>
+                  <strong>Shock</strong>
+                  <ul class="list-unstyled mb-0">
+                    <li>MIL-STD-810H, Method 516.8, Procedure I, 20g 11ms</li>
+                  </ul>
+                </td>
+              </tr>
+               <tr>
+                <td class="fw-bold ps-3">Operating Temp</td>
+                <td>-40~70 °C, Cold Start</td>
+              </tr>
+              <tr class="table-light">
+                <td class="fw-bold ps-3 table-light">Storage Temp</td>
+                <td class="table-light">-40~70°C</td>
+              </tr>
+              <tr>
+                <td class="fw-bold ps-3">Humidity</td>
+                <td>10~95% @40 °C, non-condensing</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="order" role="tabpanel">
+        <div class="table-responsive">
+          <table class="table table-sm table-borderless align-middle custom-spec-table">
+              <thead>
+                <tr><th colspan="2" class="py-2 px-3 mt-4">Ordering Information</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fw-bold ps-3 text-nowrap">LPC-D156</td>
+                  <td>15.6" P-cap Defense Panel PC with Intel® Gen. 14th 35W LGA1700 CPU, AG, IP65 Front side, 1x USB 3.0, 1x 2.5GbE LAN, 1x COM, 1x HDMI and DC 9~36V Power Input , -40~70°C (Cold Start)</td>
+                </tr>
+                <tr class="table-light">
+                <td class="fw-bold ps-3 table-light text-nowrap">LPC-D156-QS</td>
+                <td class="table-light">15.6" P-cap Defense Panel PC with Intel® Gen. 14th 35W LGA1700 CPU, AG, IP65 Front side, 1x USB 3.0, 1x 2.5GbE LAN, 1x COM, 1x HDMI and DC 9~36V Power Input , -40~70°C (Cold Start) with NIST approved PQC security software development kit</td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="download" role="tabpanel">
+        <div class="container py-5 px-5">
+            <div class="row g-4 justify-content-center">
+              <div class="col-md-4 col-6">
+                <a href="https://drive.google.com/file/d/1hwlifAy7EdQ07OCFGITGZIncd2CNPBlv/view" target="_blank" class="download-card d-flex flex-column justify-content-center align-items-center text-decoration-none">
+                  <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/datasheet.png" class="mb-3" width="50">
+                  <span>Datasheet</span>
+                </a>
+              </div>
+              <div class="col-md-4 col-6">
+                <div class="download-card d-flex flex-column justify-content-center align-items-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#downloadModal">
+                    
+                  <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" class="mb-3" width="50">
+                  <span>Certification</span>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="tab-pane fade" id="video" role="tabpanel">
+       <div class="preparing">PREPARING.... </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="cta-section text-white text-center d-flex align-items-center">
+  <div class="overlay"></div>
+  
+  <div class="container position-relative z-1">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="display-6 fw-bold mb-3">Can't find what you're looking for? Need help?</h2>
+        <p class="lead mb-4">
+          Visit our support pages for helpful contacts, guidance on obtaining documentation, warranty and repair details, contract templates, and insights into our Product Lifecycle and Configuration Management programs
+        </p>
+        <a href="https://www.elgens.com.tw/#contact" class="btn btn-orange btn-lg px-5 py-3 text-uppercase fw-bold">
+          Get Support <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="related-products py-5 pb-0">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5">Related Product</h2>
+    <div class="swiper product-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="product-card">
+            <a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-monitor-d39/tdm-flush-mount/tdm-d215/" target="_blank">
+              <div class="img-container mb-3 p-4">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/TDM-P240W-FND2-r.png" alt="TDM-D215">
+              </div>
+              <h5 class="fw-bold">TDM-D215</h5>
+              <p class="px-2 mb-3 mt-2">21.5" Defense Monitor, 1500nits, Console Mount,IP65Aluminum Front Bezel, Mosmite Film, AG, VGA/DP/HDMI,DC 9~36V, MIL-STD ...</p>
+              <button class="btn btn-orange btn-sm">See More <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;"></button>
+            </a>
+            </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="product-card">
+            <a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-monitor-d39/tdm-rugged-specialty/tdm-d240-00c/" target="_blank">
+              <div class="img-container mb-3 p-4">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/TDM-P240WH5TAGF-RND2_Front-r.png" alt="TDM-D240-00C">
+              </div>
+              <h5 class="fw-bold">TDM-D240-00C</h5>
+              <p class="px-2 mb-3 mt-2">24" Military P-cap Monitor, 1500nits, Rackmount, Certificated with MIL-STD-461G, Front Side IP65, AG, Panel Mounting Kits ...</p>
+              <button class="btn btn-orange btn-sm">See More <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;"></button>
+              
+            </a>
+            </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="product-card">
+            <a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-monitor-d39/tdm-rugged-specialty/tdm-d215-00c/" target="_blank">
+              <div class="img-container mb-3 p-4">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/TDM-D215-00C-r.png" alt="TDM-D215-00C">
+              </div>
+              <h5 class="fw-bold">TDM-D215-00C</h5>
+              <p class="px-2 mb-3 mt-2">21.5" Military P-cap Monitor, 1500nits, Rackmount, Certificated with MIL-STD-461G, Front Side IP65, AG, Panel Mounting Kits ...</p>
+               <button  class="btn btn-orange btn-sm">See More <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;"></button>
+             
+            </a> 
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="product-card">
+              <a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-monitor-d39/tdm-flush-mount/tdm-d240/" target="_blank">
+                <div class="img-container mb-3 p-4">
+                  <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/TDM-P240W-FND2-f.png" alt="TDM-D240-00C">
+                </div>
+                <h5 class="fw-bold">TDM-D240</h5>
+                <p class="px-2 mb-3 mt-2">The TDM-D240 Series is a mission-critical 24-inch rugged monitor engineered specifically for harsh ...</p>
+                <button class="btn btn-orange btn-sm">See More <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;"></button>
+              </a>
+            </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="product-card">
+            <a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-pc/lpc-d240/" target="_blank">
+              <div class="img-container mb-3 p-4">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/LPC-D240-1-1-r.png" alt="LPC-D240 Series">
+              </div>
+              <h5 class="fw-bold">LPC-D240 Series</h5>
+              <p class="px-2 mb-3 mt-2">LPC-D240 Series is a mission-critical 24" P-cap defense Panel PC powered by Intel® 14th Gen processors and secured ...</p>
+               <button  class="btn btn-orange btn-sm">See More <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;"></button>
+            </a>
+          </div>
+          
+        </div>
+        <div class="swiper-slide">
+          <div class="product-card">
+             <a href="https://www.elgens.com.tw/defense/mil-std-461g/defense-pc/lpc-d215/" target="_blank">
+              <div class="img-container mb-3 p-4">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/LPC-D240-1-1-r.png" alt="LPC-D215 Series">
+              </div>
+              <h5 class="fw-bold">LPC-D215 Series</h5>
+              <p class="px-2 mb-3 mt-2">LPC-D215 Series is a mission-critical 21.5" P-cap defense Panel PC powered by Intel® 14th Gen processors ...</p>
+               <button  class="btn btn-orange btn-sm">See More <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/link-external.png" style="width: 20px;"></button>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+      <div class="swiper-button-prev"><i class="fa-solid fa-arrow-right"></i></div>
+      <div class="swiper-button-next"><i class="fa-solid fa-arrow-right"></i></div>
+    </div>
+  </div>
+  <div class="text-right">
+    <!-- 電腦版 -->
+    <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/big-logo-2.png" class="d-none d-md-block" style="width:100%;">
+    <!-- 手機版 -->
+    <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/big-logo.png" class="d-block d-md-none" style="width:100%;margin: 20px 0;">
+  </div>
+</section>
+
+<!-- Back to Top Button -->
+
+<div class="modal fade" id="downloadModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="custom-close">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="p-5">
+        <div class="text-center mb-4 d-flex align-items-center justify-content-center">
+          <div class="title-line flex-grow-1"></div>
+          <h4 class="mx-3 fw-bold mb-0">Certification List</h4>
+          <div class="title-line flex-grow-1"></div>
+        </div>
+        <div class="row g-3 justify-content-center">
+          <div class="col-6 col-md-4">
+            <a href="https://www.elgens.com.tw/wp-content/uploads/2026/02/IEC-60945-certification-of-12th-14th-Gen.pdf" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>IEC-60945</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4">
+            <a href="https://drive.google.com/drive/u/2/folders/1ZIW_Tgn1PgBbm4ANUJ6nOqq_5ZkTAOXB" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>Panel PC CE</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4">
+            <a href="https://drive.google.com/drive/u/2/folders/1ZIW_Tgn1PgBbm4ANUJ6nOqq_5ZkTAOXB" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>Panel PC FCC</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4">
+            <a href="https://drive.google.com/drive/u/2/folders/1gG_gRfmRyAuXp9kgX9qupsQF3lp7eN-8" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>MIL-STD-810H</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4">
+            <a href="https://drive.google.com/drive/folders/1lhlf6bkeKd3aa3n3tEu2nc9WHD5UNezd" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>MIL-STD-461G</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4">
+            <a href="https://drive.google.com/file/d/1fEyKLKplZ1M9irqr9wk06nh7BvzNlfqC/view" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>MIL-STD-1275E</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-6 col-md-4">
+            <a href="https://drive.google.com/file/d/18IHd6OJowKQDpBmJq-TvUEMKd4gekhBY/view?usp=sharing" target="_blank" class="cert-card-link">
+              <div class="cert-card">
+                <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/certification.png" style="width: 48px;">
+                <span>MIL-STD-704F </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+
+const slides = document.querySelectorAll(".slide");
+const thumbs = document.querySelectorAll(".thumb");
+const prev = document.querySelector(".prev");
+const next = document.querySelector(".next");
+
+let current = 0;
+
+function showSlide(index) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  thumbs.forEach(thumb => thumb.classList.remove("active"));
+
+  slides[index].classList.add("active");
+  thumbs[index].classList.add("active");
+
+  current = index;
+}
+
+prev.addEventListener("click", () => {
+  let index = current - 1;
+  if (index < 0) index = slides.length - 1;
+  showSlide(index);
+});
+
+next.addEventListener("click", () => {
+  let index = current + 1;
+  if (index >= slides.length) index = 0;
+  showSlide(index);
+});
+
+thumbs.forEach(thumb => {
+  thumb.addEventListener("click", () => {
+    showSlide(parseInt(thumb.dataset.index));
+  });
+});
+
+
+new Swiper(".certSwiper", {
+  slidesPerView: "auto",
+  spaceBetween: 50,
+  loop: true,
+  speed: 3000,
+  autoplay: {
+    delay: 0,
+    disableOnInteraction: false,
+  },
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('section');
+
+  const revealOnScroll = () => {
+    const triggerBottom = window.innerHeight * 0.85; 
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+      if (sectionTop < triggerBottom) {
+        section.classList.add('active');
+      } else {
+        section.classList.remove('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const goTopBtn = document.getElementById('goTop');
+
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      goTopBtn.style.display = 'flex';
+    } else {
+      goTopBtn.style.display = 'none';
+    }
+  });
+
+
+  goTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
+
+const url = () => encodeURIComponent(window.location.href.split('#')[0]);
+
+  document.getElementById('fbShare').onclick = e => {
+    e.preventDefault();
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url()}`, '_blank', 'noopener,noreferrer,width=800,height=800');
+  };
+  document.getElementById('liShare').onclick = e => {
+    e.preventDefault();
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url()}`, '_blank', 'noopener,noreferrer,width=800,height=800');
+  };
+
+  const productSwiper = new Swiper('.product-swiper', {
+    loop: true,
+    spaceBetween: 24,
+
+    slidesPerView: 1, 
+    slidesPerGroup: 1, 
+
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+
+    speed: 600,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+
+    breakpoints: {
+      768: {
+        slidesPerView: 2, 
+        slidesPerGroup: 1 
+      },
+      1200: {
+        slidesPerView: 3, 
+        slidesPerGroup: 1
+      }
+    }
+  });
+
+</script>
+<!-- Content End -->
