@@ -1,0 +1,16 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" fill="#212121"/>
+<path d="M70.0769 36.5469L55 76.5469L90 66.2766" stroke="#EE7700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 3"/>
+<path d="M80.1207 44.5469L55 76.5469L86 56.4791" stroke="#EE7700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 3"/>
+<path d="M26 37.5469L51 76.5469" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M19.916 26.9893C22.2773 26.9893 24.1914 25.0751 24.1914 22.7139C24.1914 20.3526 22.2773 18.4385 19.916 18.4385C17.5548 18.4385 15.6406 20.3526 15.6406 22.7139C15.6406 25.0751 17.5548 26.9893 19.916 26.9893Z" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.9141 13V14.943" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19.9141 30.8857V32.8288" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M29.8317 22.9121H27.8887" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.943 22.9121H10" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M26.9247 29.9256L25.5508 28.5518" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.2763 17.2782L12.9023 15.9043" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.9023 29.9257L14.2762 28.5518" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M25.5508 17.2782L26.9246 15.9043" stroke="white" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="14" y="80.5469" width="73" height="7" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+</svg>

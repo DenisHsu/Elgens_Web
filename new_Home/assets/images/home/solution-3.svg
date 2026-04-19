@@ -1,0 +1,30 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" fill="#212121"/>
+<path d="M84.055 68.9863H16.9453V16.9999H84.055V68.9863Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
+<path d="M42.1465 86.002V69.1548" stroke="white" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M58.8535 69.1548V86.002" stroke="white" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M31.7031 86.002H69.2959" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M35.4619 31.7368C35.4619 33.8129 33.7788 35.4961 31.7026 35.4961C29.6265 35.4961 27.9434 33.8129 27.9434 31.7368C27.9434 29.6607 29.6265 27.9775 31.7026 27.9775C33.7788 27.9775 35.4619 29.6607 35.4619 31.7368Z" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M35.4619 54.4204C35.4619 56.4965 33.7788 58.1797 31.7026 58.1797C29.6265 58.1797 27.9434 56.4965 27.9434 54.4204C27.9434 52.3443 29.6265 50.6611 31.7026 50.6611C33.7788 50.6611 35.4619 52.3443 35.4619 54.4204Z" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M54.2588 31.7368C54.2588 33.8129 52.5756 35.4961 50.4995 35.4961C48.4234 35.4961 46.7402 33.8129 46.7402 31.7368C46.7402 29.6607 48.4234 27.9775 50.4995 27.9775C52.5756 27.9775 54.2588 29.6607 54.2588 31.7368Z" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M54.2588 54.4204C54.2588 56.4965 52.5756 58.1797 50.4995 58.1797C48.4234 58.1797 46.7402 56.4965 46.7402 54.4204C46.7402 52.3443 48.4234 50.6611 50.4995 50.6611C52.5756 50.6611 54.2588 52.3443 54.2588 54.4204Z" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M73.0557 31.7368C73.0557 33.8129 71.3725 35.4961 69.2964 35.4961C67.2203 35.4961 65.5371 33.8129 65.5371 31.7368C65.5371 29.6607 67.2203 27.9775 69.2964 27.9775C71.3725 27.9775 73.0557 29.6607 73.0557 31.7368Z" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M73.0557 54.4204C73.0557 56.4965 71.3725 58.1797 69.2964 58.1797C67.2203 58.1797 65.5371 56.4965 65.5371 54.4204C65.5371 52.3443 67.2203 50.6611 69.2964 50.6611C71.3725 50.6611 73.0557 52.3443 73.0557 54.4204Z" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M20.3008 31.7383H27.9447" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M35.4629 31.7383H46.7407" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M54.2598 31.7383H65.5376" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M73.0547 31.7383H80.6986" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M20.3008 54.418H27.9447" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M35.4629 54.418H46.7407" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M54.2598 54.418H65.5376" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M73.0547 54.418H80.6986" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M50.5 58.1787V65.6973" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M31.7031 65.6973V58.1787" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M31.7031 50.6582V35.4958" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M31.7031 27.9785V20.46" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M50.5 20.46V27.9785" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M50.5 35.4958V50.6582" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M69.2969 20.46V27.9785" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M69.2969 35.4958V50.6582" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M69.2969 58.1787V65.6973" stroke="#EE7700" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"/>
+</svg>
