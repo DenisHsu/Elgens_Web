@@ -1,11 +1,36 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// 2026-07-12 修改：這個旗標要在最上面、其他程式碼執行之前就讀出來，因為下面
+// restoreSectionAfterResizeReload() 的 IIFE 會在腳本一開始執行時就同步把
+// sessionStorage 裡的這筆資料讀走並刪除；如果晚一點（例如在 window "load"
+// 監聽器裡）才用同樣的 key 去讀，會永遠讀到 null，沒辦法判斷這次載入是不是
+// 因為「換尺寸強制重新整理」而來的。
+const RESIZE_RELOAD_KEY = "elgensResizeReloadSection";
+const wasResizeReload = sessionStorage.getItem(RESIZE_RELOAD_KEY) !== null;
+
 // =====  text fade up =====
 const splitInstances = [];
 document.fonts.ready.then(() => {
   gsap.registerPlugin(SplitText);
   initTextAnimations();
 });
+function animateSplitLines(el, split) {
+  const linesToAnimate = split.lines.filter(line => line.textContent.trim() !== "");
+  return gsap.fromTo(linesToAnimate, {
+    yPercent: 100,
+    opacity: 0
+  }, {
+    yPercent: 0,
+    opacity: 1,
+    duration: 0.3,
+    ease: "power1.out",
+    stagger: 0.1,
+    scrollTrigger: {
+      trigger: el,
+      start: "top 60%"
+    }
+  });
+}
 function initTextAnimations() {
   gsap.utils.toArray(".js-text-fadeup").forEach(el => {
     const split = new SplitText(el, {
@@ -16,49 +41,43 @@ function initTextAnimations() {
       type: "lines",
       linesClass: "lineParent"
     });
+    const tween = animateSplitLines(el, split);
     splitInstances.push({
       el,
       split,
-      mask
-    });
-    const linesToAnimate = split.lines.filter(line => line.textContent.trim() !== "");
-    gsap.fromTo(linesToAnimate, {
-      yPercent: 100,
-      opacity: 0
-    }, {
-      yPercent: 0,
-      opacity: 1,
-      duration: 0.3,
-      ease: "power1.out",
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: el,
-        start: "top 60%"
-      }
+      mask,
+      tween
     });
   });
 }
 
-// window.addEventListener("resize", () => {
-//   splitInstances.forEach(instance => {
-//     const {
-//       el,
-//       split,
-//       mask
-//     } = instance;
-//     split.revert();
-//     mask.revert();
-//     instance.split = new SplitText(el, {
-//       type: "lines",
-//       linesClass: "lineChild"
-//     });
-//     instance.mask = new SplitText(el, {
-//       type: "lines",
-//       linesClass: "lineParent"
-//     });
-//   });
-//   ScrollTrigger.refresh();
-// });
+// 2026-07-09 修改：視窗寬度改變時（例如平板切桌機），GSAP SplitText 依「切割當下」
+// 的寬度把整段文字拆成固定的 line 區塊，之後即使容器變寬，這些斷行也不會自動
+// 重新排版，導致文字卡在窄版的換行方式、右側留一大塊空白，看起來像跑版。
+// 這裡重新切割 lines 並依原本是否已播放過進場動畫決定要不要直接顯示（避免重新
+// 整理後文字整段消失、要重新捲動才會出現）。原本這段邏輯被註解關閉，現在改成
+// 併入最下面「單一 resize 監聽器」統一呼叫（避免重複監聽器互相干擾，詳見該處註解）。
+function resplitTextAnimations() {
+  splitInstances.forEach(instance => {
+    const { el, split, mask, tween } = instance;
+    const alreadyRevealed = !tween || !tween.scrollTrigger || tween.scrollTrigger.progress > 0;
+    if (tween) {
+      if (tween.scrollTrigger) tween.scrollTrigger.kill();
+      tween.kill();
+    }
+    split.revert();
+    mask.revert();
+    const newSplit = new SplitText(el, { type: "lines", linesClass: "lineChild" });
+    const newMask = new SplitText(el, { type: "lines", linesClass: "lineParent" });
+    const newTween = animateSplitLines(el, newSplit);
+    if (alreadyRevealed) {
+      newTween.progress(1);
+    }
+    instance.split = newSplit;
+    instance.mask = newMask;
+    instance.tween = newTween;
+  });
+}
 
 function handleResponsiveBr() {
   const headers = document.querySelectorAll(".js-text-fadeup");
@@ -203,7 +222,6 @@ tabs.forEach((tab, i) => {
   }
 }
 
-
 // ===== number progress =====
 gsap.utils.toArray(".js-counter-number").forEach(el => {
   const raw = el.dataset.number;
@@ -299,14 +317,55 @@ function initCardStack() {
     scrollTriggerInstances.push(st.scrollTrigger);
   });
 }
-initCardStack();
-//  ScrollTrigger.refresh();
 
-// add
-// window.addEventListener("resize", debounce(() => {
-//   initCardStack();
-//   ScrollTrigger.refresh();
-// }, 150));
+// 2026-07-12 修改：PRODUCTS 與 CASE STUDY 兩個區塊過去分別各自追蹤自己的圖片
+// 載入狀態，圖片一載完就各自重建 ScrollTrigger（initProductSection() 或
+// initCardStack()）。這些圖片多數是 loading="lazy"、且有不少是外部網址，載入
+// 時機完全不受控——如果使用者已經開始捲動、剛好在這個時間點某張圖片才載入完成
+// 觸發重建，PRODUCTS 或 CASE STUDY 的 pin 距離會在使用者「捲動途中」被重新計算、
+// 版面跟著跳動，兩個區塊的 pin 起訖位置對不齊，就會在兩者中間多出一段空白
+// （使用者實測影片重現：FEATURED PRODUCTS 與 CASE STUDY 之間出現空白）。
+// 修正方式：不要邊捲邊補、事後修正，而是「先等兩個區塊全部圖片都準備好，
+// 再一次性建立 PRODUCTS + CASE STUDY 的 ScrollTrigger」，兩者的 pin 距離從一
+// 開始就是用最終正確的版面算出來的，之後不需要在使用者可能已經在捲動的情況下
+// 重新調整。若有圖片遲遲載入不完（例如外部圖床逾時），用一個保險逾時，最多等
+// 3 秒就強制以目前狀態初始化，避免整頁卡住不動。
+function waitForImages(imgs, timeoutMs) {
+  const pending = imgs.filter(img => img.getClientRects().length > 0 && !img.complete);
+  if (pending.length === 0) return Promise.resolve();
+  return new Promise(resolve => {
+    let remaining = pending.length;
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      resolve();
+    };
+    const onDone = () => {
+      remaining--;
+      if (remaining <= 0) finish();
+    };
+    pending.forEach(img => {
+      img.addEventListener("load", onDone, { once: true });
+      img.addEventListener("error", onDone, { once: true });
+    });
+    setTimeout(finish, timeoutMs);
+  });
+}
+function initScrollSections() {
+  initProductSection();
+  initCardStack();
+  ScrollTrigger.refresh();
+  // initProductSection()／initCardStack() 都是先用 clearProps 把區塊還原成無
+  // 位移的預設狀態，再建立新的 pin／scrub 動畫；scrub 動畫本身要等下一次捲動
+  // 事件才會把畫面同步到目前捲動位置。這裡強制呼叫一次 update()，讓畫面立刻
+  // 依「目前」捲動位置同步，而不是等使用者再滑一下才對。
+  ScrollTrigger.update();
+}
+
+// NOTE: resize-triggered recalculation is handled by the single consolidated
+// resize listener near the bottom of this file, which now always does a full
+// page reload on resize — see that listener's comment for why.
 
 // ==== certificied slider =====
 window.addEventListener("load", () => {
@@ -385,12 +444,23 @@ window.addEventListener("load", () => {
   });
 });
 window.addEventListener("load", () => {
-  initProductSection();
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 50);
-  initCardStack();
-  ScrollTrigger.refresh();
+  const allTrackedImages = sliders
+    .flatMap(slider => Array.from(slider.querySelectorAll("img")))
+    .concat(cards.flatMap(card => Array.from(card.querySelectorAll("img"))));
+  // 只有第一次載入頁面才需要捲回頂端；跨尺寸重新整理是靠 restoreSectionAfterResizeReload()
+  // 還原到原本的區塊，不能在這裡搶著捲到 0（wasResizeReload 在檔案最上面就已經讀好了，
+  // 見該處註解）。
+  waitForImages(allTrackedImages, 3000).then(() => {
+    initScrollSections();
+    if (!wasResizeReload) {
+      window.scrollTo(0, 0);
+      // 捲回頂端後版面可能因為 scrollbar 消失/字型渲染而有微幅變動，稍後再校正一次。
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+        ScrollTrigger.update();
+      }, 50);
+    }
+  });
 });
 
 // let resizeTimer;
@@ -437,21 +507,79 @@ document.addEventListener('DOMContentLoaded', function () {
     }).catch(error => console.error('Error!', error.message));
   };
 });
+// 2026-07-11 修改：不管是不是跨斷點（平板/桌機），視窗尺寸只要變動就直接整頁
+// 重新整理，比逐一補同步（sticky nav、SplitText 斷行、ScrollTrigger pin/scrub）
+// 更乾脆、更不會漏掉沒想到的狀況。重新整理前記住「目前在哪一個區塊、在該區塊
+// 內的相對位置（0~1）」，重新整理完成後換算成新版面下的捲動位置跳回去——記
+// 區塊＋相對位置，而不是記絕對像素 Y，是因為不同寬度下每個區塊的高度都不一樣，
+// 直接還原舊的像素 Y 在新版面下很可能落在別的區塊。（RESIZE_RELOAD_KEY 已經在
+// 檔案最上面宣告過了，這裡不再重複宣告。）
+function getAllSections() {
+  return Array.from(document.querySelectorAll(".l-section"));
+}
+function saveCurrentSectionForReload() {
+  const sections = getAllSections();
+  const navOffset = 100; // 大約是 sticky sub-nav 的高度，抓落在 nav 下緣的區塊
+  let current = sections[0];
+  for (const sec of sections) {
+    if (sec.getBoundingClientRect().top <= navOffset) {
+      current = sec;
+    } else {
+      break;
+    }
+  }
+  if (!current) return;
+  const index = sections.indexOf(current);
+  const sectionTop = window.scrollY + current.getBoundingClientRect().top;
+  const sectionHeight = current.offsetHeight || 1;
+  const ratio = Math.max(0, Math.min(1, (window.scrollY - sectionTop) / sectionHeight));
+  try {
+    sessionStorage.setItem(RESIZE_RELOAD_KEY, JSON.stringify({ index, ratio }));
+  } catch (e) {}
+}
+(function restoreSectionAfterResizeReload() {
+  const raw = sessionStorage.getItem(RESIZE_RELOAD_KEY);
+  if (raw === null) return;
+  sessionStorage.removeItem(RESIZE_RELOAD_KEY);
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (e) {
+    return;
+  }
+  if (!data || typeof data.index !== "number") return;
+  window.addEventListener("load", () => {
+    const restoreScroll = () => {
+      const sections = getAllSections();
+      const target = sections[data.index];
+      if (!target) return;
+      document.documentElement.style.scrollBehavior = "auto";
+      const y = target.offsetTop + (data.ratio || 0) * target.offsetHeight;
+      window.scrollTo(0, Math.max(0, y));
+      ScrollTrigger.refresh();
+      ScrollTrigger.update();
+    };
+    // 立即還原一次，圖片/字型陸續載入完成、區塊高度可能再變動，200ms 後再修正一次。
+    restoreScroll();
+    setTimeout(restoreScroll, 200);
+  });
+})();
+
 let lastWidth = window.innerWidth;
-let lastIsDesktop = window.innerWidth >= 1400;
+let lastHeight = window.innerHeight;
 window.addEventListener("resize", debounce(() => {
   const widthDiff = Math.abs(window.innerWidth - lastWidth);
-  const isDesktop = window.innerWidth >= 1400;
-  const crossedBreakpoint = isDesktop !== lastIsDesktop;
-  if (widthDiff >= 100 || crossedBreakpoint) {
-    setTimeout(() => {
-      handleResponsiveBr();
-      initProductSection();
-      initCardStack();
-      ScrollTrigger.refresh();
-    }, 50);
-    lastWidth = window.innerWidth;
-    lastIsDesktop = isDesktop;
+  const heightDiff = Math.abs(window.innerHeight - lastHeight);
+  // 2026-07-12 修改：原本高度變化 >= 60px 也會觸發強制重新整理，但手機/平板瀏覽器
+  // 在「捲動時網址列自動收合/展開」也會觸發 resize 事件、把 window.innerHeight
+  // 改變 50~150px 不等——這跟使用者主動旋轉螢幕或改變視窗大小是完全不同的情況，
+  // 卻會被誤判成「換尺寸」，導致頁面在使用者滑動網頁的過程中不斷自動重新整理，
+  // 造成平板上「怎麼滑都滑不動、一直被重整」的情況。
+  // 改成只用寬度變化來判斷：實際的換尺寸（桌機拖曳視窗、平板橫直轉向）一定會
+  // 造成寬度明顯改變；單純網址列收合只會動到高度、不會動到寬度，因此不會再誤觸發。
+  if (widthDiff >= 60) {
+    saveCurrentSectionForReload();
+    location.reload();
   }
 }));
 //# sourceMappingURL=home.js.map

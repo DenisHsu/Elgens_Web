@@ -1424,6 +1424,40 @@ form {
   background: url(../images/home/button-dotted-orange.svg);
   color: #ee7700;
 }
+.view-home .l-section--certified .c-cert-download-group {
+  -webkit-column-gap: 50px;
+  column-gap: 50px;
+  row-gap: 16px;
+}
+.view-home .l-section--certified .c-btn-feature--download-cert {
+  max-width: none;
+  width: auto;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+@media (max-width: 575.98px) {
+  .view-home .l-section--certified .c-cert-download-group {
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+  }
+  .view-home .l-section--certified .c-btn-feature--download-cert {
+    width: 100%;
+  }
+}
+/* 2026-07-09 修改：修正 IEC-60945 兩顆下載按鈕在 992px~1400px 區間把標題文字擠成 "IEC-" / "60945" 兩行的跑版問題。
+   讓標題與下載按鈕群組在空間不足時整行換行，而不是各自被壓縮。 */
+.view-home .l-section--certified .tab-pane > .d-flex.flex-column.flex-lg-row.mb-40px {
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  row-gap: 20px;
+}
+.view-home .l-section--certified .tab-pane > .d-flex.flex-column.flex-lg-row.mb-40px > h3 {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 .view-home .l-section--certified .c-feature-img {
   background: url(../images/home/certified-slider-bg.png), #ee7700;
   padding: 32px 0;
