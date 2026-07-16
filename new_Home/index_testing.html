@@ -78,7 +78,7 @@
     }
 
     #mainNav.is-fixed{
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: #0d0d0d;
     }
 
     .navbar-custom .nav-link {
@@ -515,10 +515,27 @@
     <div data-bs-theme="dark">
         <section class="l-section l-section--banner vh-100 position-relative">
             <div class="c-video-wrapper h-100">
-                <video class="w-100 h-100 object-fit-cover" muted playsinline loop poster="assets/images/home/banner-poster.webp" id="hero-video">
+                <video class="w-100 h-100 object-fit-cover" autoplay muted playsinline loop poster="assets/images/home/banner-poster.webp" id="hero-video">
                     <source src="assets/images/home/banner-video.mp4?dfbb9efafcf0b1187493a7e8" type="video/mp4">
                 </video>
-                <script>if(window.innerWidth>768){document.getElementById('hero-video').setAttribute('autoplay','');}</script>
+                <script>
+                (function() {
+                    var heroVideo = document.getElementById('hero-video');
+                    if (!heroVideo) return;
+                    var tryPlay = function() {
+                        var playPromise = heroVideo.play();
+                        if (playPromise && typeof playPromise.catch === 'function') {
+                            playPromise.catch(function() {});
+                        }
+                    };
+                    if (heroVideo.readyState >= 2) {
+                        tryPlay();
+                    } else {
+                        heroVideo.addEventListener('loadeddata', tryPlay, { once: true });
+                    }
+                    window.addEventListener('load', tryPlay);
+                })();
+                </script>
             </div>
 
             <div class="container">
@@ -543,7 +560,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#products">PRODUCTS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#case">CASE STUDY</a></li>
-                <li class="nav-item"><a class="nav-link" href="#certified">CERTIFIED</a></li>
+                <li class="nav-item"><a class="nav-link" href="#certified">CERTIFICATIONS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#why">WHY ELGENS</a></li>
                 <li class="nav-item"><a class="nav-link" href="#brochure">BROCHURE</a></li>
             </ul>
@@ -609,7 +626,7 @@
                             <div class="card-body p-0 d-flex flex-column">
                                 <h3 class="h2 fs-lg-4 fs-6 text-primary mb-3">Defense Server</h3>
                                 <p class="fs-11 mb-20px flex-grow-1">
-                                    Defense Server delivers quantum‑safe security using NIST FIPS 203/204 post‑quantum cryptography (PQC), integrated with the X‑Corleone Safe Platform for unified device management. The platform provides dual TPM 2.0 for secure boot, strong authentication, TLS 1.3 with PQC for encrypted communications, and full‑disk encryption to protect data at rest.
+                                    Defense Server delivers quantum‑safe security using NIST FIPS 203/204/205 post‑quantum cryptography (PQC), integrated with the X‑Corleone Safe Platform for unified device management. The platform provides dual TPM 2.0 for secure boot, strong authentication, TLS 1.3 with PQC for encrypted communications, and full‑disk encryption to protect data at rest.
                                 </p>
                                 <div class="text-end">
                                     <a href="https://www.elgens.com.tw/defense/pqc-and-edge-security/x-corleone-series/"
@@ -863,8 +880,8 @@
                         <div class="d-flex flex-column flex-lg-row align-items-lg-center mb-40px">
                             <h3 class="h2 text-light me-lg-12px mb-lg-0 mb-12px">IEC-60945</h3>
                             <div class="c-cert-download-group d-flex flex-wrap">
-                                <button type="button" data-cert-type="panel_pc" data-cert-label="Download Certificate [Panel PC]" class="js-cert-gate btn btn-lg c-btn-feature c-btn-feature--orange c-btn-feature--download c-btn-feature--download-cert py-3 px-32px text-nowrap"><span class="material-symbols-outlined me-12px align-text-bottom">download</span>Download Certificate [Panel PC]</button>
-                                <button type="button" data-cert-type="monitor" data-cert-label="Download Certificate [Monitor]" class="js-cert-gate btn btn-lg c-btn-feature c-btn-feature--orange c-btn-feature--download c-btn-feature--download-cert py-3 px-32px text-nowrap"><span class="material-symbols-outlined me-12px align-text-bottom">download</span>Download Certificate [Monitor]</button>
+                                <button type="button" data-cert-type="panel_pc" data-cert-label="Download Certificate [Panel PC]" class="js-cert-gate btn btn-lg c-btn-feature c-btn-feature--orange c-btn-feature--download c-btn-feature--download-cert py-3 px-32px" style="flex:1;min-width:max-content;justify-content:center;"><span class="material-symbols-outlined me-12px align-text-bottom">download</span>Download Certificate [Panel PC]</button>
+                                <button type="button" data-cert-type="monitor" data-cert-label="Download Certificate [Monitor]" class="js-cert-gate btn btn-lg c-btn-feature c-btn-feature--orange c-btn-feature--download c-btn-feature--download-cert py-3 px-32px" style="flex:1;min-width:max-content;justify-content:center;"><span class="material-symbols-outlined me-12px align-text-bottom">download</span>Download Certificate [Monitor]</button>
                             </div>
                         </div>
                         <div class="l-content overflow-hidden">
@@ -995,7 +1012,7 @@
         <section id="why" class="l-section l-section--why py-60px" style="padding-bottom: 0 !important;">
             <div class="container">
                 <h2 class="display-1 fs-lg-1 fs-2 text-secondary js-text-fadeup mb-60px">W<span class="text-primary">H</span>Y ELGENS</h2>
-                <div class="c-articlefs-lg-8 fs-9">
+                <div class="c-article fs-lg-8 fs-9">
                     <p class="js-text-fadeup">ELGENS designs and delivers rugged displays, panel PCs, and mission-ready computing solutions tested and certified to key military and maritime requirements, including <span class="text-primary">MIL-STD-461G <span style="font-size: 16px;"> (CE101/CE102/RE101/RE102)</span>, MIL-STD-704F, MIL-STD-1275E, MIL-STD-810H</span>, and <span class="text-primary"> IEC 60945</span>. Built for harsh environments, our platforms deliver stable and reliable operation in the field.</p>
                     <br>
                     <p class="js-text-fadeup">Driven by our mission, <strong>"Valuable Innovation for Defense,"</strong> and committed to advancing global safety and sustainability through innovation, ELGENS serves as a hardware–software integrator. We support prime contractors, system integrators, and government programs with rapid customization, integration, and test support. More than a rugged hardware provider, ELGENS helps customers simplify system architecture, accelerate deployment, and deliver flexible, interoperable, mission-ready solutions for defense and industrial applications.</p>
@@ -1042,12 +1059,30 @@
           var player;
           var youtubeLoaded = false;
 
+          var YT_VIDEO_ID = 'kkXKUxuwq0c';
+
+          function showYouTubeFallback() {
+            var container = document.getElementById("yt-video");
+            if (!container) return;
+            container.innerHTML = ''
+              + '<a href="https://www.youtube.com/watch?v=' + YT_VIDEO_ID + '" target="_blank" rel="noopener" '
+              + 'style="display:flex;flex-direction:column;align-items:center;justify-content:center;'
+              + 'width:100%;height:100%;background:#0d0d0d;color:#fff;text-decoration:none;gap:16px;">'
+              + '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="#ee7700">'
+              + '<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-2.7A12 12 0 0 0 2 12a12 12 0 0 0 20 9 4.83 4.83 0 0 1-.67-2.29C21.27 13.14 22 10.77 22 8a4.83 4.83 0 0 1-2.41-1.31zM10 15V9l5 3z"/>'
+              + '<path d="M23 7a11.93 11.93 0 0 1-2.82 7.66A11.92 11.92 0 0 1 12 19.5 11.92 11.92 0 0 1 2 12 11.92 11.92 0 0 1 12 4.5c.42 0 .83.02 1.24.07A4.84 4.84 0 0 0 17.5 7H23z"/>'
+              + '</svg>'
+              + '<span style="font-size:18px;font-weight:600;letter-spacing:1px;">WATCH ON YOUTUBE</span>'
+              + '</a>';
+          }
+
           function onYouTubeIframeAPIReady() {
             player = new YT.Player("yt-video", {
-              videoId: 'kkXKUxuwq0c',
+              videoId: YT_VIDEO_ID,
               events: {
                 onReady: onPlayerReady,
-                onStateChange: onPlayerStateChange
+                onStateChange: onPlayerStateChange,
+                onError: function(e) { showYouTubeFallback(); }
               },
               playerVars: { autoplay: 0, mute: 1 }
             });
@@ -1120,7 +1155,7 @@
                         <div class="c-feature-desc order-lg-0 order-1">
                             <div class="mb-40px">
                                 <h3 class="fs-10 text-secondary mb-20px">ELGENS' testing applications focus primarily on high-demand military and industrial environments, with particular emphasis on naval and other defense-related display and panel equipment.</h3>
-                                <p>ELGENS tests focus on high‑demand military/industrial use, especially naval displays and panel PCs. Scenarios include: cockpit apps, high‑brightness backlight control, NVIS, battlefield/extreme climate (70°C to −50°C), IK08 anti‑vandal, rubber‑glove and multi‑touch, and EtherCAT IO slave kits. Compatible with Wago, Siemens, and Rockwell systems. Contact us for details or specific needs.</p>
+                                <p>ELGENS tests focus on high‑demand military/industrial use, especially naval displays and panel PCs. Scenarios include: cockpit apps, high‑brightness backlight control, NVIS, battlefield/extreme climate (−50°C to 70°C), IK08 anti‑vandal, rubber‑glove and multi‑touch, and EtherCAT IO slave kits. Compatible with Wago, Siemens, and Rockwell systems. Contact us for details or specific needs.</p>
                             </div>
                             <a href="https://www.elgens.com.tw/test-video/" onclick="gtag('event', 'feature_click', { 'feature_section': 'PRODUCT TEST VIDEO', 'feature_title': 'View Test Videos' });" target="_blank" class="btn btn-lg c-btn-feature c-btn-feature--dark">View Test Videos <span class="ms-12px c-link-more__icon material-symbols-outlined align-text-bottom">arrow_outward</span></a>
                         </div>
@@ -1253,7 +1288,7 @@
 <script src="assets/vendor/gsap/dist/ScrollTrigger.js?dfbb9efafcf0b1187493a7e8"></script>
 <script src="assets/vendor/gsap/dist/SplitText.js?dfbb9efafcf0b1187493a7e8"></script>
 <script src="assets/vendor/tom-select/dist/js/tom-select.complete.js?dfbb9efafcf0b1187493a7e8"></script>
-<script src="assets/js/home.js?dfbb9efafcf0b1187493a7e8"></script>
+<script src="assets/js/home.js?v20260717d"></script>
 <script src="assets/js/contact-form.js?dfbb9efafcf0b1187493a7e8"></script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QFV4GLG5N1"></script>
@@ -1430,15 +1465,39 @@ document.addEventListener('DOMContentLoaded', function () {
   const navbar = document.getElementById('mainNav');
   const header = document.querySelector('.elgens-header');
   if (!navbar || !header) return;
-  const navTop = navbar.offsetTop;
-  window.addEventListener('scroll', () => {
+  const spacer = document.getElementById('navTrigger');
+  let navTop = spacer ? spacer.offsetTop : navbar.offsetTop;
+
+  function onScroll() {
     const headerHeight = header.offsetHeight;
-    if (window.scrollY >= navTop - headerHeight) {
+    const shouldFix = window.scrollY >= navTop - headerHeight;
+    if (shouldFix && !navbar.classList.contains('is-fixed')) {
+      const navHeight = navbar.offsetHeight;
       navbar.classList.add('is-fixed');
-    } else {
+      if (spacer) spacer.style.height = navHeight + 'px';
+    } else if (!shouldFix && navbar.classList.contains('is-fixed')) {
       navbar.classList.remove('is-fixed');
+      if (spacer) spacer.style.height = '';
     }
+  }
+
+  window.addEventListener('scroll', onScroll);
+
+  let navResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(navResizeTimer);
+    navResizeTimer = setTimeout(() => {
+      const wasFixed = navbar.classList.contains('is-fixed');
+      if (wasFixed) {
+        navbar.classList.remove('is-fixed');
+        if (spacer) spacer.style.height = '';
+      }
+      navTop = spacer ? spacer.offsetTop : navbar.offsetTop;
+      onScroll();
+    }, 150);
   });
+
+  onScroll();
 });
 
 function scrollToTop() {

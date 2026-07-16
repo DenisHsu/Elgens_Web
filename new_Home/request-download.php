@@ -1,4 +1,23 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/tokens/php_error.log');
+
+// 捕獲 fatal error，讓 jQuery 能收到 JSON 而非 500
+register_shutdown_function(function() {
+    $err = error_get_last();
+    if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        if (!headers_sent()) {
+            http_response_code(200);
+            header('Content-Type: application/json; charset=UTF-8');
+        }
+        $msg = $err['message'] . ' in ' . $err['file'] . ':' . $err['line'];
+        file_put_contents(__DIR__ . '/tokens/php_error.log', '[' . date('Y-m-d H:i:s') . '] FATAL: ' . $msg . PHP_EOL, FILE_APPEND);
+        echo json_encode(['success' => false, 'message' => 'Server error. Please contact us.'], JSON_UNESCAPED_UNICODE);
+    }
+});
+
 header('Content-Type: application/json; charset=UTF-8');
 
 // ── 允許跨來源（同網域可移除）─────────────────────────────
@@ -9,9 +28,18 @@ if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] === $allowedOrigin
 
 // ── 設定 ──────────────────────────────────────────────────
 define('TOKENS_DIR',          __DIR__ . '/tokens/');
-define('TOKEN_EXPIRE_SECONDS', 12 * 3600); // 12 小時
-define('RATE_LIMIT_MAX',       3);          // 每個 IP 每小時最多 3 次
-define('RATE_LIMIT_WINDOW',    3600);       // 1 小時視窗
+define('TOKEN_EXPIRE_SECONDS', 12 * 3600);
+define('RATE_LIMIT_MAX',       50);
+define('RATE_LIMIT_WINDOW',    3600);
+define('DOWNLOAD_SECRET',      'REDACTED_DOWNLOAD_SECRET');
+define('DOWNLOAD_LOG',         __DIR__ . '/tokens/download_log.txt');
+
+// ── Gmail API OAuth2 憑證（請填入實際值）────────────────
+define('GMAIL_CLIENT_ID',     'REDACTED_GOOGLE_CLIENT_ID');
+define('GMAIL_CLIENT_SECRET', 'REDACTED_GOOGLE_CLIENT_SECRET');
+define('GMAIL_REFRESH_TOKEN', 'REDACTED_REFRESH_TOKEN');
+define('GMAIL_FROM_EMAIL',    'sales@elgens.com.tw');
+define('GMAIL_FROM_NAME',     'ELGENS');
 
 // 免費信箱黑名單
 $FREE_EMAIL_DOMAINS = [
@@ -78,7 +106,7 @@ $CERT_CONFIG = [
 
 // ── 工具函式 ──────────────────────────────────────────────
 // 永遠回傳 HTTP 200，讓 jQuery AJAX success callback 處理錯誤訊息
-function jsonError(string $msg, int $code = 0): void {
+function jsonError($msg, $code = 0) {
     http_response_code(200);
     echo json_encode(['success' => false, 'message' => $msg], JSON_UNESCAPED_UNICODE);
     exit;
@@ -109,7 +137,7 @@ if (in_array($domain, $FREE_EMAIL_DOMAINS, true)) {
     jsonError('Please use your company email. Free email providers (Gmail, Yahoo, etc.) are not accepted.');
 }
 
-// ── Rate Limiting（依 IP，存於 tokens/ 目錄）─────────────
+// ── Rate Limiting（依 IP，每小時最多 RATE_LIMIT_MAX 次）──
 $ip       = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 $ipHash   = md5($ip);
 $rateFile = TOKENS_DIR . 'rate_' . $ipHash . '.json';
@@ -119,51 +147,89 @@ if (file_exists($rateFile)) {
     $raw = json_decode(file_get_contents($rateFile), true);
     if ($raw) $rateData = $raw;
 }
-
-// 視窗過期則重置
 if (time() - $rateData['window_start'] > RATE_LIMIT_WINDOW) {
     $rateData = ['count' => 0, 'window_start' => time()];
 }
-
 if ($rateData['count'] >= RATE_LIMIT_MAX) {
     jsonError('Too many requests from your IP. Please try again later.');
 }
-
 $rateData['count']++;
 file_put_contents($rateFile, json_encode($rateData), LOCK_EX);
 
-// ── 產生 Token ────────────────────────────────────────────
-$token     = bin2hex(random_bytes(32)); // 64 字元 hex
-$tokenData = [
-    'email'      => $email,
-    'cert_type'  => $certType,
-    'created_at' => time(),
-    'expires_at' => time() + TOKEN_EXPIRE_SECONDS,
-    'used'       => false,
-];
+// ── Email 每日限制（每個 Email 每天最多 8 次）────────────
+$emailHash     = md5($email);
+$emailRateFile = TOKENS_DIR . 'email_' . $emailHash . '.json';
+$emailLimit    = 8;
+$daySeconds    = 86400; // 24 小時
 
-$tokenFile = TOKENS_DIR . $token . '.json';
-if (file_put_contents($tokenFile, json_encode($tokenData), LOCK_EX) === false) {
-    error_log('[ELGENS] Failed to write token file: ' . $tokenFile);
-    jsonError('Server error, please try again later.');
+$emailData = ['count' => 0, 'day_start' => strtotime('today midnight')];
+if (file_exists($emailRateFile)) {
+    $raw = json_decode(file_get_contents($emailRateFile), true);
+    if ($raw) $emailData = $raw;
 }
+// 過了今天的午夜就重置（用 calendar day，非滾動 24 小時）
+if ($emailData['day_start'] < strtotime('today midnight')) {
+    $emailData = ['count' => 0, 'day_start' => strtotime('today midnight')];
+}
+if ($emailData['count'] >= $emailLimit) {
+    jsonError('You have reached the maximum of 8 download requests per day for this email address. Please try again tomorrow.');
+}
+$emailData['count']++;
+file_put_contents($emailRateFile, json_encode($emailData), LOCK_EX);
 
-// ── 組合下載連結與信件內容 ───────────────────────────────
-$cert        = $CERT_CONFIG[$certType];
-$downloadUrl = 'https://www.elgens.com.tw/new_Home/download.php?token=' . $token;
+// ── 產生 Base64 Auth 字串 ─────────────────────────────────
+$cert      = $CERT_CONFIG[$certType];
+$expiresAt = time() + TOKEN_EXPIRE_SECONDS;
+
+// 決定目標：外部 URL 直接放連結；本地檔案用 local:<certType>
+$destination = $cert['local'] ? ('local:' . $certType) : $cert['url'];
+
+// payload JSON（不含簽章，用來計算 HMAC）
+$payloadData = ['u' => $destination, 'x' => $expiresAt];
+$payloadJson = json_encode($payloadData, JSON_UNESCAPED_UNICODE);
+
+// HMAC 簽章（取前 24 字元）
+$sig = substr(hash_hmac('sha256', $payloadJson, DOWNLOAD_SECRET), 0, 24);
+
+// 合併後做 URL-safe Base64（payload.sig，以 . 分隔）
+$auth = rtrim(strtr(base64_encode($payloadJson . '.' . $sig), '+/', '-_'), '=');
+
+// ── 組合下載連結 ──────────────────────────────────────────
+$downloadUrl = 'https://www.elgens.com.tw/new_Home/download.php?base=' . $auth;
 $certLabel   = $cert['label'];
-
-$expiresAt   = $tokenData['expires_at'];
 $expiresStr  = date('Y-m-d H:i', $expiresAt) . ' (UTC+8)';
+
+// ── 記錄到 download_log.txt ───────────────────────────────
+$logLine = implode(' | ', [
+    date('Y-m-d H:i:s'),
+    $email,
+    $certType,
+    $certLabel,
+    $downloadUrl,
+]) . PHP_EOL;
+file_put_contents(DOWNLOAD_LOG, $logLine, FILE_APPEND | LOCK_EX);
+
+// GA UTM 追蹤參數：campaign = {認證書名稱}_certificate_download
+// 從 label 去掉 " Certificate" 後綴，空格與括號轉底線
+$certCampaignName = str_replace(' Certificate', '', $certLabel);
+$certCampaignName = preg_replace('/[\s\(\)]+/', '_', $certCampaignName);
+$certCampaignName = trim($certCampaignName, '_');
+$utmCampaign      = $certCampaignName . '_certificate_download';
+
+$downloadUrlTracked = $downloadUrl
+    . '&utm_source=email&utm_medium=email'
+    . '&utm_campaign=' . rawurlencode($utmCampaign);
 
 $htmlBody = <<<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:0;background:#0d0d0d;font-family:Arial,Helvetica,sans-serif;">
+<body style="margin:0;padding:0;background:#ffffff;font-family:Arial,Helvetica,sans-serif;">
   <div style="max-width:580px;margin:40px auto;background:#1a1a1a;border-radius:8px;overflow:hidden;">
-    <div style="background:#ee7700;padding:24px 40px;">
-      <span style="font-size:22px;font-weight:bold;color:#0d0d0d;letter-spacing:2px;">ELGENS</span>
+    <div style="background:#ee7700;padding:20px 40px;text-align:center;">
+      <img src="https://www.elgens.com.tw/new_Home/assets/images/home/elgens_logo.png"
+           alt="ELGENS" height="48"
+           style="display:inline-block;height:48px;width:auto;border:0;">
     </div>
     <div style="padding:40px;">
       <h2 style="color:#ee7700;margin:0 0 16px;">Certificate Download</h2>
@@ -173,19 +239,15 @@ $htmlBody = <<<HTML
         <strong style="color:#ee7700;">12 hours</strong> (by {$expiresStr}).
       </p>
       <div style="text-align:center;margin:32px 0;">
-        <a href="{$downloadUrl}"
+        <a href="{$downloadUrlTracked}"
            style="display:inline-block;background:#ee7700;color:#0d0d0d;padding:14px 40px;
                   border-radius:4px;text-decoration:none;font-weight:bold;font-size:16px;">
           Download Certificate
         </a>
       </div>
-      <p style="font-size:12px;color:#666666;word-break:break-all;">
-        If the button does not work, copy and paste the link below into your browser:<br>
-        <a href="{$downloadUrl}" style="color:#ee7700;">{$downloadUrl}</a>
-      </p>
       <hr style="border:none;border-top:1px solid #333;margin:32px 0;">
       <p style="font-size:11px;color:#555555;margin:0;">
-        © ELGENS CO., LTD. All Rights Reserved.<br>
+        &copy; ELGENS CO., LTD. All Rights Reserved.<br>
         This is an automated message. Please do not reply directly to this email.
       </p>
     </div>
@@ -194,64 +256,156 @@ $htmlBody = <<<HTML
 </html>
 HTML;
 
-// ── 寄信（PHP mail()，走主機本地 MTA，不需 outbound SMTP port）──
+// ══════════════════════════════════════════════════════════
+// Gmail API 函式（透過 HTTPS port 443，不需 SMTP port）
+// ══════════════════════════════════════════════════════════
+
+/**
+ * 用 refresh token 取得 Gmail API access token
+ */
+function gmailGetAccessToken() {
+    $ch = curl_init('https://oauth2.googleapis.com/token');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => http_build_query([
+            'client_id'     => GMAIL_CLIENT_ID,
+            'client_secret' => GMAIL_CLIENT_SECRET,
+            'refresh_token' => GMAIL_REFRESH_TOKEN,
+            'grant_type'    => 'refresh_token',
+        ]),
+        CURLOPT_TIMEOUT        => 15,
+        CURLOPT_SSL_VERIFYPEER => true,
+    ]);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr  = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false) {
+        throw new \RuntimeException("cURL error getting access token: $curlErr");
+    }
+    if ($httpCode !== 200) {
+        throw new \RuntimeException("Access token HTTP $httpCode: $response");
+    }
+
+    $data = json_decode($response, true);
+    if (empty($data['access_token'])) {
+        throw new \RuntimeException("No access_token in response: $response");
+    }
+    return $data['access_token'];
+}
+
+/**
+ * 透過 Gmail API 寄送 HTML 信件
+ *
+ * @param string $to        收件人 email
+ * @param string $subject   信件主旨
+ * @param string $htmlBody  HTML 信件內容
+ * @param string $plainBody 純文字內容（選填，用於 BCC 通知信）
+ */
+function gmailSend($to, $subject, $htmlBody, $plainBody = '') {
+    $accessToken = gmailGetAccessToken();
+
+    $from = GMAIL_FROM_NAME . ' <' . GMAIL_FROM_EMAIL . '>';
+    $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+
+    if ($plainBody !== '') {
+        // multipart/alternative（純文字 + HTML）
+        $boundary = 'elgens_' . bin2hex(random_bytes(8));
+        $raw  = "From: {$from}\r\n";
+        $raw .= "To: <{$to}>\r\n";
+        $raw .= "Subject: {$encodedSubject}\r\n";
+        $raw .= "MIME-Version: 1.0\r\n";
+        $raw .= "Content-Type: multipart/alternative; boundary=\"{$boundary}\"\r\n";
+        $raw .= "\r\n";
+        $raw .= "--{$boundary}\r\n";
+        $raw .= "Content-Type: text/plain; charset=UTF-8\r\n\r\n";
+        $raw .= $plainBody . "\r\n";
+        $raw .= "--{$boundary}\r\n";
+        $raw .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $raw .= "Content-Transfer-Encoding: base64\r\n\r\n";
+        $raw .= chunk_split(base64_encode($htmlBody)) . "\r\n";
+        $raw .= "--{$boundary}--";
+    } else {
+        // 純 HTML
+        $raw  = "From: {$from}\r\n";
+        $raw .= "To: <{$to}>\r\n";
+        $raw .= "Subject: {$encodedSubject}\r\n";
+        $raw .= "MIME-Version: 1.0\r\n";
+        $raw .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $raw .= "Content-Transfer-Encoding: base64\r\n";
+        $raw .= "\r\n";
+        $raw .= chunk_split(base64_encode($htmlBody));
+    }
+
+    $rawBase64 = rtrim(strtr(base64_encode($raw), '+/', '-_'), '=');
+
+    $ch = curl_init('https://gmail.googleapis.com/gmail/v1/users/me/messages/send');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode(['raw' => $rawBase64]),
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . $accessToken,
+            'Content-Type: application/json',
+        ],
+        CURLOPT_TIMEOUT        => 30,
+        CURLOPT_SSL_VERIFYPEER => true,
+    ]);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr  = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false) {
+        throw new \RuntimeException("cURL error sending email: $curlErr");
+    }
+    if ($httpCode !== 200) {
+        throw new \RuntimeException("Gmail API send failed HTTP $httpCode: $response");
+    }
+
+    $data = json_decode($response, true);
+    if (empty($data['id'])) {
+        throw new \RuntimeException("Gmail API no message id: $response");
+    }
+}
+
+// ── 寄信（Gmail API）─────────────────────────────────────
 $subject = '[ELGENS] Your Certificate Download Link';
 
-$encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
-$mailHeaders    = implode("\r\n", [
-    'From: ELGENS <no-reply@elgens.com.tw>',
-    'Reply-To: sales@elgens.com.tw',
-    'MIME-Version: 1.0',
-    'Content-Type: text/html; charset=UTF-8',
-    'Content-Transfer-Encoding: base64',
-    'X-Mailer: PHP/' . PHP_VERSION,
-]);
+try {
+    // 寄主信給 User
+    gmailSend($email, $subject, $htmlBody);
 
-$sent = @mail($email, $encodedSubject, chunk_split(base64_encode($htmlBody)), $mailHeaders);
+} catch (\Exception $e) {
+    // ── 寄送失敗：寫 log 並通知管理員 ────────────────────
+    $errMsg = '[' . date('Y-m-d H:i:s') . '] GMAIL API ERROR' . PHP_EOL
+            . 'To      : ' . $email . PHP_EOL
+            . 'CertType: ' . $certType . PHP_EOL
+            . 'Error   : ' . $e->getMessage() . PHP_EOL
+            . str_repeat('-', 60) . PHP_EOL;
+    file_put_contents(TOKENS_DIR . 'smtp_error.log', $errMsg, FILE_APPEND | LOCK_EX);
+    error_log('[ELGENS] Gmail API error: ' . $e->getMessage());
 
-// ── 通知管理員：每次請求都寄一份完整 info ────────────────
-$notifySubject = '[ELGENS] Certificate Download Requested';
-$notifyBody    = "=== Certificate Download Request ===\n\n"
-               . "Requested At : " . date('Y-m-d H:i:s') . "\n"
-               . "Recipient    : " . $email . "\n"
-               . "Cert Type    : " . $certType . "\n"
-               . "Cert Label   : " . $cert['label'] . "\n\n"
-               . "=== Token Info ===\n\n"
-               . "Token        : " . $token . "\n"
-               . "Download URL : " . $downloadUrl . "\n"
-               . "Created At   : " . date('Y-m-d H:i:s', $tokenData['created_at']) . "\n"
-               . "Expires At   : " . date('Y-m-d H:i:s', $expiresAt) . "\n\n"
-               . "=== Request Info ===\n\n"
-               . "IP Address   : " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\n"
-               . "User Agent   : " . ($_SERVER['HTTP_USER_AGENT'] ?? 'unknown') . "\n"
-               . "Referer      : " . ($_SERVER['HTTP_REFERER'] ?? 'unknown') . "\n\n"
-               . "=== Delivery ===\n\n"
-               . "mail() sent  : " . ($sent ? 'YES' : 'NO — check smtp_error.log') . "\n";
-@mail('denis20191104@gmail.com', $notifySubject, $notifyBody,
-    "From: no-reply@elgens.com.tw\r\nContent-Type: text/plain; charset=UTF-8");
+    // 通知管理員（寄送錯誤時才發）
+    $errorNotify = "=== Send Error ===\n\n"
+                 . "Time     : " . date('Y-m-d H:i:s') . "\n"
+                 . "To       : " . $email . "\n"
+                 . "CertType : " . $certType . "\n"
+                 . "Error    : " . $e->getMessage() . "\n\n"
+                 . "IP       : " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\n";
+    try {
+        gmailSend(
+            'denis20191104@gmail.com',
+            '[ELGENS] Send Error — Certificate Download',
+            '<pre style="font-family:monospace;">' . htmlspecialchars($errorNotify) . '</pre>',
+            $errorNotify
+        );
+    } catch (\Exception $ignored) {
+        // 通知信失敗就算了，不影響主流程
+    }
 
-if (!$sent) {
-    // ── 寫入本地 error log（可在 cPanel File Manager 查看）──
-    $errorMsg  = '[' . date('Y-m-d H:i:s') . '] MAIL ERROR' . PHP_EOL;
-    $errorMsg .= 'To      : ' . $email . PHP_EOL;
-    $errorMsg .= 'CertType: ' . $certType . PHP_EOL;
-    $errorMsg .= 'Message : PHP mail() returned false' . PHP_EOL;
-    $errorMsg .= str_repeat('-', 60) . PHP_EOL;
-    file_put_contents(TOKENS_DIR . 'smtp_error.log', $errorMsg, FILE_APPEND | LOCK_EX);
-
-    // ── PHP 系統 error_log（出現在 cPanel → Error Logs）────
-    error_log('[ELGENS] mail() failed for ' . $email . ' cert=' . $certType);
-
-    // ── 寄警報信給管理員 ──────────────────────────────────
-    $alertSubject = '[ELGENS ALERT] Certificate email delivery failed';
-    $alertBody    = "mail() returned false at " . date('Y-m-d H:i:s') . "\n\n"
-                  . "Recipient : " . $email . "\n"
-                  . "Cert Type : " . $certType . "\n\n"
-                  . "Check cPanel Error Logs for details.\n";
-    @mail('denis20191104@gmail.com', $alertSubject, $alertBody,
-        "From: no-reply@elgens.com.tw\r\nContent-Type: text/plain; charset=UTF-8");
-
-    @unlink($tokenFile);
     jsonError('Failed to send email. Please try again later or contact us directly.');
 }
 

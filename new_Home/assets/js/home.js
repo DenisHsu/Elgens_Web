@@ -1,5 +1,12 @@
 gsap.registerPlugin(ScrollTrigger);
 
+// 2026-07-17 修正：停用瀏覽器內建的 scroll restoration（Chrome 會在 location.reload()
+// 後非同步把頁面捲回舊的 pixel Y，這個動作發生在 window "load" 事件之後，會在
+// initScrollSections() + doRestore() 完成後再次覆蓋捲動位置，導致 GSAP pin 狀態
+// 與實際 scrollY 不同步，造成 Products/Case Study 版面跑掉。
+// 改成 'manual' 之後，瀏覽器完全不插手，由我們的程式碼自行管理捲動位置。
+history.scrollRestoration = 'manual';
+
 // 2026-07-12 修改：這個旗標要在最上面、其他程式碼執行之前就讀出來，因為下面
 // restoreSectionAfterResizeReload() 的 IIFE 會在腳本一開始執行時就同步把
 // sessionStorage 裡的這筆資料讀走並刪除；如果晚一點（例如在 window "load"
@@ -355,11 +362,14 @@ function waitForImages(imgs, timeoutMs) {
 function initScrollSections() {
   initProductSection();
   initCardStack();
-  ScrollTrigger.refresh();
-  // initProductSection()／initCardStack() 都是先用 clearProps 把區塊還原成無
-  // 位移的預設狀態，再建立新的 pin／scrub 動畫；scrub 動畫本身要等下一次捲動
-  // 事件才會把畫面同步到目前捲動位置。這裡強制呼叫一次 update()，讓畫面立刻
-  // 依「目前」捲動位置同步，而不是等使用者再滑一下才對。
+  // 2026-07-17 修正：這裡「不」呼叫 ScrollTrigger.refresh()。
+  // refresh() 會臨時把所有 pin spacer 拿掉、重新計算各 trigger 的起訖，
+  // 導致 CASE STUDY 的 pin start 在「PRODUCTS spacer 已被臨時移除」的狀態下計算，
+  // 少算了 scrollDistance（≈ 3 × viewport height），pin 提早觸發，
+  // 正好落在 PRODUCTS pin 中間，兩者互相干擾、全部失效。
+  // ScrollTrigger.create() 被呼叫當下 spacer 已在 DOM 裡，起訖位置本來就是對的，
+  // 不需要 refresh() 再算一次。
+  // 只需要 update() 讓動畫狀態同步到目前的 scrollY（此時為 0）即可。
   ScrollTrigger.update();
 }
 
@@ -447,14 +457,39 @@ window.addEventListener("load", () => {
   const allTrackedImages = sliders
     .flatMap(slider => Array.from(slider.querySelectorAll("img")))
     .concat(cards.flatMap(card => Array.from(card.querySelectorAll("img"))));
-  // 只有第一次載入頁面才需要捲回頂端；跨尺寸重新整理是靠 restoreSectionAfterResizeReload()
-  // 還原到原本的區塊，不能在這裡搶著捲到 0（wasResizeReload 在檔案最上面就已經讀好了，
-  // 見該處註解）。
   waitForImages(allTrackedImages, 3000).then(() => {
+    // 2026-07-17 修正：不論是否為 resize reload，都先強制捲到 0，
+    // 確保 initScrollSections()（pin 距離、card stack 高度）從正確的零點計算。
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+
     initScrollSections();
-    if (!wasResizeReload) {
-      window.scrollTo(0, 0);
-      // 捲回頂端後版面可能因為 scrollbar 消失/字型渲染而有微幅變動，稍後再校正一次。
+
+    if (wasResizeReload && resizeReloadData) {
+      // pins 建立完成後，還原到使用者 resize 前所在的區塊位置。
+      // 注意：這裡「不」再呼叫 ScrollTrigger.refresh()——refresh() 已在
+      // initScrollSections() 裡從 scrollY=0 算好所有 pin 的起訖；在這裡
+      // 從非零的 Y 再呼叫一次 refresh() 會讓 GSAP 重新從 Y 計算，把起訖點算錯。
+      // 只需要 update()，讓 GSAP 依新的 scrollY 同步動畫狀態即可。
+      const doRestore = () => {
+        const sections = getAllSections();
+        const target = sections[resizeReloadData.index];
+        if (!target) return;
+        const y = target.offsetTop + (resizeReloadData.ratio || 0) * target.offsetHeight;
+        window.scrollTo(0, Math.max(0, y));
+        ScrollTrigger.update();
+      };
+      // 等兩個 requestAnimationFrame，確保 GSAP 已完成初始渲染後再捲動，
+      // 避免與瀏覽器本身的渲染管線衝突。
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          doRestore();
+          // 圖片/字型可能還在陸續載入，300ms 後再校正一次。
+          setTimeout(doRestore, 300);
+        });
+      });
+    } else if (!wasResizeReload) {
+      // 首次載入：保持在頂端，稍後再校正。
       setTimeout(() => {
         ScrollTrigger.refresh();
         ScrollTrigger.update();
@@ -537,7 +572,11 @@ function saveCurrentSectionForReload() {
     sessionStorage.setItem(RESIZE_RELOAD_KEY, JSON.stringify({ index, ratio }));
   } catch (e) {}
 }
-(function restoreSectionAfterResizeReload() {
+// 2026-07-17 修正：不在此處設置 window.load 監聽器。
+// 改為只讀取並儲存 sessionStorage 資料，讓 window.load → waitForImages → initScrollSections
+// 全部跑完之後，再還原捲動位置——避免 pins 尚未建立就呼叫 scrollTo/refresh。
+let resizeReloadData = null;
+(function loadResizeReloadData() {
   const raw = sessionStorage.getItem(RESIZE_RELOAD_KEY);
   if (raw === null) return;
   sessionStorage.removeItem(RESIZE_RELOAD_KEY);
@@ -548,21 +587,7 @@ function saveCurrentSectionForReload() {
     return;
   }
   if (!data || typeof data.index !== "number") return;
-  window.addEventListener("load", () => {
-    const restoreScroll = () => {
-      const sections = getAllSections();
-      const target = sections[data.index];
-      if (!target) return;
-      document.documentElement.style.scrollBehavior = "auto";
-      const y = target.offsetTop + (data.ratio || 0) * target.offsetHeight;
-      window.scrollTo(0, Math.max(0, y));
-      ScrollTrigger.refresh();
-      ScrollTrigger.update();
-    };
-    // 立即還原一次，圖片/字型陸續載入完成、區塊高度可能再變動，200ms 後再修正一次。
-    restoreScroll();
-    setTimeout(restoreScroll, 200);
-  });
+  resizeReloadData = data;
 })();
 
 let lastWidth = window.innerWidth;
