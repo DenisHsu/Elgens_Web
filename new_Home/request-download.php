@@ -26,20 +26,54 @@ if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] === $allowedOrigin
     header('Access-Control-Allow-Origin: ' . $allowedOrigin);
 }
 
+// ── 讀取 .env（正式金鑰只放這裡，此檔案不可提交進 git）──────
+// .env 放在這支檔案同一層（new_Home/.env），格式為每行 KEY=VALUE。
+// 範例請看同目錄的 .env.example。
+(function () {
+    $envPath = __DIR__ . '/.env';
+    if (!is_file($envPath) || !is_readable($envPath)) {
+        return;
+    }
+    foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim($line);
+        if ($line === '' || $line[0] === '#' || strpos($line, '=') === false) {
+            continue;
+        }
+        [$key, $value] = array_map('trim', explode('=', $line, 2));
+        $value = trim($value, "\"'");
+        if ($key !== '' && getenv($key) === false) {
+            putenv($key . '=' . $value);
+        }
+    }
+})();
+
+// 缺少必要環境變數時，回傳統一的 JSON 錯誤（而不是讓程式在中途炸掉），並記錄到 log
+function requireEnv($key) {
+    $value = getenv($key);
+    if ($value === false || $value === '') {
+        error_log('[ELGENS] Missing required environment variable: ' . $key);
+        http_response_code(200);
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode(['success' => false, 'message' => 'Server configuration error. Please contact us.'], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    return $value;
+}
+
 // ── 設定 ──────────────────────────────────────────────────
 define('TOKENS_DIR',          __DIR__ . '/tokens/');
 define('TOKEN_EXPIRE_SECONDS', 12 * 3600);
 define('RATE_LIMIT_MAX',       50);
 define('RATE_LIMIT_WINDOW',    3600);
-define('DOWNLOAD_SECRET',      'REDACTED_DOWNLOAD_SECRET');
+define('DOWNLOAD_SECRET',      requireEnv('DOWNLOAD_SECRET'));
 define('DOWNLOAD_LOG',         __DIR__ . '/tokens/download_log.txt');
 
-// ── Gmail API OAuth2 憑證（請填入實際值）────────────────
-define('GMAIL_CLIENT_ID',     'REDACTED_GOOGLE_CLIENT_ID');
-define('GMAIL_CLIENT_SECRET', 'REDACTED_GOOGLE_CLIENT_SECRET');
-define('GMAIL_REFRESH_TOKEN', 'REDACTED_REFRESH_TOKEN');
-define('GMAIL_FROM_EMAIL',    'sales@elgens.com.tw');
-define('GMAIL_FROM_NAME',     'ELGENS');
+// ── Gmail API OAuth2 憑證（正式值只存在 .env，不寫死在程式碼裡）──
+define('GMAIL_CLIENT_ID',     requireEnv('GMAIL_CLIENT_ID'));
+define('GMAIL_CLIENT_SECRET', requireEnv('GMAIL_CLIENT_SECRET'));
+define('GMAIL_REFRESH_TOKEN', requireEnv('GMAIL_REFRESH_TOKEN'));
+define('GMAIL_FROM_EMAIL',    getenv('GMAIL_FROM_EMAIL') ?: 'sales@elgens.com.tw');
+define('GMAIL_FROM_NAME',     getenv('GMAIL_FROM_NAME') ?: 'ELGENS');
 
 // 免費信箱黑名單
 $FREE_EMAIL_DOMAINS = [

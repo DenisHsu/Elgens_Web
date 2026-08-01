@@ -1,0 +1,11 @@
+# 環境變數 / 正式金鑰 — 絕對不可提交進 git
+.env
+*.env
+!.env.example
+
+# 執行期產生的資料（下載紀錄、rate-limit 暫存、錯誤 log）
+new_Home/tokens/
+
+# macOS
+.DS_Store
+pre_filter_repo_backup.bundle
