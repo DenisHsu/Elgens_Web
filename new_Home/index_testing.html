@@ -1558,7 +1558,7 @@ window.addEventListener('scroll', function() {
             style="font-size:18px;">send</span>
           Send Download Link
         </button>
-        <a href="https://www.elgens.com.tw/contact/"
+        <a href="https://www.elgens.com.tw/#contact"
           id="cert-gate-contact"
           onclick="gtag('event','feature_click',{'feature_section':'CERTIFIED PRODUCTS','feature_title':'EmailGate_ContactUs'});"
           style="flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;
@@ -1630,6 +1630,24 @@ window.addEventListener('scroll', function() {
   function closeModal() {
     $modal.hide();
   }
+
+  /* ── Contact Us：關閉 Modal 並捲動到 #contact 錨點 ─────── */
+  $('#cert-gate-contact').on('click', function (e) {
+    e.preventDefault();
+    closeModal();
+
+    var $target = $('#contact');
+    if ($target.length) {
+      $('html, body').animate({ scrollTop: $target.offset().top }, 500);
+      if (history.pushState) {
+        history.pushState(null, '', '#contact');
+      } else {
+        window.location.hash = 'contact';
+      }
+    } else {
+      window.location.href = $(this).attr('href');
+    }
+  });
 
   /* ── 表單送出 ────────────────────────────────────────── */
   $form.on('submit', function (e) {
