@@ -6,12 +6,10 @@
 <link href="https://www.elgens.com.tw/new_Home/assets/css/bootstrap.css?dfbb9efafcf0b1187493a7e8" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
 <style>
 #elgens-page-wrap{width:100%;overflow-x:hidden;padding:0;margin:0;box-sizing:border-box;}
 #elgens-page-wrap *,#elgens-page-wrap *::before,#elgens-page-wrap *::after{box-sizing:border-box;}
 #elgens-page-wrap section{width:100%;max-width:100%;}
-
 body{font-family:"IBM Plex Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;}
 body,section{background-color:#fff;}
 h1,h2,h5,p,.text-muted{color:#424551;}
@@ -20,22 +18,17 @@ h1,h2,h5,p,.text-muted{color:#424551;}
 .section{margin:80px 0;}
 .scroll-reveal{opacity:0;transform:translateY(50px);transition:all 0.8s ease-out;}
 .scroll-reveal.active{opacity:1;transform:translateY(0);}
-
 .top-hero{background:url("https://www.elgens.com.tw/wp-content/uploads/2026/03/header-texture.png") center/cover no-repeat;padding:40px 0;}
 .top-hero h1{font-size:38px;font-weight:600;color:#fff;}
-
 .breadcrumb-item.active{color:#424551;}
 .breadcrumb-item+.breadcrumb-item::before{content:"|";color:#9A9CA5;}
-
 .main-product{position:relative;}
 .main-product h2{font-size:38px;}
 .main-product h5{font-size:18px;}
 .product-section{position:relative;text-align:center;padding:40px 20px;margin:10px 60px;}
-
 .features{list-style:none;padding-left:0;}
 .features li{position:relative;padding-left:30px;margin-bottom:10px;color:#424551;}
 .features li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;background:url("https://www.elgens.com.tw/wp-content/uploads/2026/03/bullet-icon.png") center/contain no-repeat;}
-
 .slider-container{position:relative;max-width:800px;margin:auto;}
 .slider{position:relative;}
 .slide{display:none;width:100%;cursor:zoom-in;}
@@ -44,29 +37,24 @@ h1,h2,h5,p,.text-muted{color:#424551;}
 .slider-nav:hover{color:#EE7700;}
 .prev{left:-80px;}
 .next{right:-80px;}
-
 /* thumbnails: display:flex is required */
 .thumbnails{margin-top:40px;display:flex;flex-wrap:wrap;justify-content:center;gap:20px;}
 .thumb,.thumb-img{cursor:pointer;border:2px solid transparent;transition:0.3s;}
 .thumb{width:120px;opacity:0.5;border-radius:8px;}
 .thumb.active{opacity:1;border-color:#EE7700;}
 .thumb-img:hover{border-color:#EE7700;}
-
 .share-box{background:#d9d9d9;padding:15px 25px;display:inline-flex;align-items:center;gap:18px;}
 .share-text{font-weight:bold;color:#333;}
 .icon{width:34px;height:34px;border-radius:50%;background:#bfbfbf;display:flex;align-items:center;justify-content:center;color:#555;text-decoration:none;transition:0.3s ease;}
 .icon:hover{background:#999;color:#fff;}
-
 .side-label{position:absolute;right:0;top:0;bottom:0;width:160px;display:flex;align-items:center;justify-content:center;border-right:3px solid #EE7700;overflow:hidden;pointer-events:none;z-index:0;}
 .side-label span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:120px;font-weight:700;color:rgba(0,0,0,0.07);letter-spacing:6px;white-space:nowrap;}
 .side-label.smaller span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:70px;font-weight:700;color:rgba(0,0,0,0.07);letter-spacing:6px;white-space:nowrap;}
-
 /* Badge row (TPM / PQC / CE / FCC / FIPS 203-205) */
 .badge-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:24px 0;}
 .badge-row img{height:56px;width:auto;}
 .badge-row .badge-sep{width:1px;height:40px;background:#d9d9d9;margin:0 6px;}
 @media(max-width:576px){.badge-row img{height:44px;}}
-
 .certification{background:#cfc6bc;}
 .cert-slider{overflow:hidden;width:100%;background:#cfc6bc;padding:30px 0;}
 .cert-item{width:auto;display:flex;align-items:center;justify-content:center;}
@@ -74,26 +62,23 @@ h1,h2,h5,p,.text-muted{color:#424551;}
 .certSwiper{width:100%;}
 .certSwiper .swiper-slide{width:160px;display:flex;justify-content:center;align-items:center;}
 .certSwiper .swiper-slide img{height:60px;width:auto;}
-
 .table-responsive{padding-top:30px;}
 .custom-tabs .nav-item{margin-right:10px;flex:1;text-align:center;}
 .custom-tabs .nav-link{font-size:20px;justify-content:center;color:#7B7777;background-color:transparent;border:none;border-bottom:3px solid #7B7777;border-radius:0;padding:12px 20px;font-weight:600;width:100%;display:flex;align-items:center;}
 .custom-tabs .nav-link::before{content:"";display:inline-block;width:16px;height:16px;background-image:url("https://www.elgens.com.tw/wp-content/uploads/2026/03/tab-icon-o.png");background-size:contain;background-repeat:no-repeat;background-position:center;}
 .custom-tabs .nav-link.active::before{content:"";display:inline-block;width:16px;height:16px;background-image:url("https://www.elgens.com.tw/wp-content/uploads/2026/03/tab-icon.png");background-size:contain;background-repeat:no-repeat;background-position:center;}
 .custom-tabs .nav-link.active{color:#1E212C!important;background-color:#EE7700!important;border-bottom-color:#EE7700!important;}
-
 .custom-spec-table thead th{font-size:16px;background-color:#555!important;font-weight:500;color:#fff;}
 .custom-spec-table tbody td.table-light{background-color:#F0F0F0!important;}
 .custom-spec-table td,.custom-spec-table th{font-size:16px;padding-top:8px;padding-bottom:8px;}
 .custom-spec-table tbody td{border:none;}
 .table>:not(caption)>*>*{background-color:#fff;}
-
 .download-card{background:#ef7d00;color:#fff;height:200px;border-radius:8px;transition:all 0.3s ease;}
+.download-card.deep-blue{background:#0b5777;}
 .download-card span{font-size:20px;font-weight:600;}
 .download-card:hover{transform:translateY(-6px);box-shadow:0 10px 25px rgba(0,0,0,0.15);}
 .download-card img{transition:0.3s;}
 .download-card:hover img{transform:scale(1.1);}
-
 .custom-close{position:absolute;right:-15px;top:-15px;background-color:white;border-radius:50%;width:40px;height:40px;opacity:1;box-shadow:0 2px 10px rgba(0,0,0,0.1);z-index:1060;display:flex;align-items:center;justify-content:center;}
 .modal-body h4{color:#1E212C;}
 .title-line{height:1px;background-color:#ef7d00;}
@@ -105,26 +90,22 @@ h1,h2,h5,p,.text-muted{color:#424551;}
 .modal-body{background-size:cover;background-image:url(https://www.elgens.com.tw/wp-content/uploads/2026/03/popup-bg.png);color:#EE7700;}
 .modal-content{background-color:unset;background-clip:unset;border:0;}
 .modal{--bs-modal-width:800px;}
-
 .cta-section{position:relative;min-height:342px;background:url('https://www.elgens.com.tw/wp-content/uploads/2026/03/banner.png') center/cover no-repeat;padding:80px 0;}
 .position-relative h2{color:#fff;}
 .position-relative p{color:#fff;}
 .overlay::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(rgba(255,255,255,0.2) 1px,transparent 1px);background-size:20px 20px;}
 .z-1{z-index:1;}
-
 .btn-orange{font-weight:600;background-color:#d67102;color:#1E212C;border-radius:0;padding:8px 25px;font-size:16px;border:none;position:relative;overflow:hidden;}
 .btn-orange:hover{background-color:#ef7d00;color:#1E212C;}
 .btn-orange::before{content:"";position:absolute;top:0;left:-80%;width:80%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);transition:transform .6s ease;}
 .btn-orange:hover::before{transform:translateX(260%);}
 p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
-
 .related-products{background-color:#D7CEC6;position:relative;overflow:hidden;z-index:1;}
 .product-card{transition:transform 0.3s ease;height:100%;}
 .product-card p{color:#1E212C;}
 .product-card:hover{transform:translateY(-5px);}
 .img-container{height:200px;display:flex;align-items:center;justify-content:center;}
 .img-container img{height:200px;max-width:fit-content;}
-
 .swiper-button-prev::after,.swiper-button-next::after{display:none;}
 .product-swiper .swiper-button-prev,.product-swiper .swiper-button-next{background:transparent!important;box-shadow:none!important;border:none!important;width:44px;height:44px;top:38%;}
 .product-swiper .swiper-button-prev{left:0;}
@@ -133,7 +114,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
 .swiper-button-prev i,.swiper-button-next i{font-size:32px;color:#EE7700;}
 .slider-nav svg{width:46px;height:46px;}
 .product-swiper .swiper-slide{height:auto;}
-
 /* Features / Advantages / Benefits */
 .fab-block{margin-bottom:28px;}
 .fab-block h6{font-size:14px;letter-spacing:1px;text-transform:uppercase;color:#EE7700;font-weight:700;margin-bottom:16px;}
@@ -146,7 +126,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
 .why-list li:last-child{border-bottom:none;}
 .why-list .why-check{color:#EE7700;font-size:18px;margin-top:2px;}
 .why-list strong{color:#1E212C;}
-
 .elgens-custom-footer{background-color:#ffffff;font-size:15px;color:#1E212C;border-top:1px solid #e0e0e0;padding:20px 0;}
 .elgens-custom-footer a{text-decoration:none;color:#1E212C;transition:opacity 0.2s ease;display:inline-flex;align-items:center;gap:6px;}
 .elgens-custom-footer a:hover{opacity:0.65;}
@@ -155,12 +134,10 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
 .elgens-custom-footer .divider{color:#ccc;margin:0 4px;}
 .elgens-custom-footer .copyright{color:#666;font-size:14px;text-align:right;}
 @media(max-width:768px){.elgens-custom-footer .copyright{text-align:left;margin-top:12px;}}
-
 .preparing{font-weight:bold;font-size:5.5rem;color:rgba(0,0,0,0.08);text-align:center;margin:50px;}
 .product-section-wrapper{position:sticky;top:100px;}
 #goTop{position:fixed;bottom:40px;right:40px;width:50px;height:50px;background-color:#EE7700;color:#fff;border:none;border-radius:50%;font-size:24px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:1000;transition:opacity 0.3s ease;}
 #goTop:hover{background-color:#EE7700;}
-
 /* ========================================Lightbox======================================== */
 .lightbox-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);
@@ -191,7 +168,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
 .lightbox-nav.lb-next:hover{transform:translateY(-50%) translateX(3px);}
 .lightbox-nav.hidden{opacity:0;pointer-events:none;}
 .lightbox-counter{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.65);font-size:14px;letter-spacing:1px;z-index:10001;font-family:"IBM Plex Sans",sans-serif;}
-
 @media(max-width:1200px){.custom-tabs .nav-link{font-size:16px;}}
 @media(max-width:991px){.custom-tabs .nav-link{font-size:14px;padding:12px 0;}.side-label{display:none;}}
 @media(max-width:768px){
@@ -225,7 +201,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
   .lightbox-nav.lb-next{right:4px;}
 }
 </style>
-
 <script>
 (function(){
   function fixParents(){
@@ -258,16 +233,13 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
   setTimeout(init,300);setTimeout(init,800);setTimeout(init,1500);
 })();
 </script>
-
 <div id="elgens-page-wrap">
-
 <!-- Hero Section -->
 <section class="top-hero">
   <div class="container">
     <h1>Shelby 1U PQC Gateway Series</h1>
   </div>
 </section>
-
 <!-- Breadcrumb -->
 <div class="py-2 mb-4 mt-3">
   <div class="container">
@@ -281,7 +253,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     </nav>
   </div>
 </div>
-
 <!-- Product Section -->
 <section class="main-product py-5">
   <div class="side-label smaller">
@@ -311,13 +282,11 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
           </div>
         </div>
       </div>
-
       <div class="col-lg-6">
         <h2 class="fw-bold mb-3">Shelby 1U PQC Gateway Series</h2>
         <p>
           The Shelby 1U PQC Gateway Series is a high-performance cybersecurity gateway engineered to enable seamless adoption of Post-Quantum Cryptography (PQC) for existing enterprise and industrial infrastructures. Powered by Intel&reg; Core&trade; processors supporting 14th, 13th, and 12th Gen platforms, it delivers high-performance cryptographic processing while preserving existing server architectures through a non-intrusive gateway deployment model. With enterprise-grade hybrid TLS, TPM 2.0, high-availability architecture, and flexible PCIe expansion, the Shelby 1U Series provides a future-ready security platform for defense, finance, telecommunications, healthcare, and critical infrastructure.
         </p>
-
         <!-- Certification / Trust Badges -->
         <div class="badge-row">
           <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/TPM.png" alt="TPM 2.0">
@@ -330,7 +299,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
           <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/FIPS-204.png" alt="FIPS 204 - ML-DSA">
           <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/FIPS-205.png" alt="FIPS 205 - SLH-DSA">
         </div>
-
         <h5 class="orange mt-4 mb-3 fw-bold">Why Shelby 1U PQC Gateway Series?</h5>
         <ul class="why-list">
           <li><i class="fa-solid fa-check why-check"></i><span><strong>Protect Existing Infrastructure</strong> &mdash; Secure legacy servers without replacing current IT investments.</span></li>
@@ -340,7 +308,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
           <li><i class="fa-solid fa-check why-check"></i><span><strong>Enterprise-Class Trusted Hardware</strong> &mdash; Onboard TPM 2.0, Secure Boot, and full-disk LUKS encryption.</span></li>
           <li><i class="fa-solid fa-check why-check"></i><span><strong>High-Density 1U Deployment</strong> &mdash; Standard 19" 1U rackmount form factor optimizes rack space utilization.</span></li>
         </ul>
-
         <div class="share-box mt-4">
           <span class="share-text">Share:</span>
           <a href="https://www.facebook.com/elgens/" target="_blank" rel="noopener noreferrer" class="icon" id="fbShare"><i class="fab fa-facebook-f"></i></a>
@@ -351,7 +318,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     </div>
   </div>
 </section>
-
 <!-- Features, Advantages and Benefits -->
 <section class="section product-intro scroll-reveal">
   <div class="container">
@@ -405,7 +371,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     </div>
   </div>
 </section>
-
 <!-- Tabs Section -->
 <section class="product-intro scroll-reveal">
   <div class="container mt-5">
@@ -414,9 +379,7 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
       <li class="nav-item" role="presentation"><button class="nav-link" id="order-tab" data-bs-toggle="tab" data-bs-target="#order" type="button" role="tab">Ordering Info</button></li>
       <li class="nav-item" role="presentation"><button class="nav-link" id="download-tab" data-bs-toggle="tab" data-bs-target="#download" type="button" role="tab">Download</button></li>
     </ul>
-
     <div class="tab-content pt-3 mb-5" id="productTabContent">
-
       <!-- Specification -->
       <div class="tab-pane fade show active" id="spec" role="tabpanel">
         <div class="table-responsive">
@@ -494,7 +457,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
           <img src="https://www.elgens.com.tw/wp-content/uploads/2026/09/architecture_diagram.png" style="width:100%;">
         </div>
       </div>
-
       <!-- Ordering Info -->
       <div class="tab-pane fade" id="order" role="tabpanel">
         <div class="table-responsive">
@@ -524,19 +486,18 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
           </table>
         </div>
       </div>
-
       <!-- Download -->
       <div class="tab-pane fade" id="download" role="tabpanel">
         <div class="container py-5 px-5">
           <div class="row g-4">
             <div class="col-md-4 col-6">
-              <a href="https://www.elgens.com.tw/wp-content/uploads/2026/09/Mafia-1U-PQC-Gateway_Datasheet_20260831.pdf" target="_blank" class="download-card d-flex flex-column justify-content-center align-items-center text-decoration-none">
+              <a href="https://www.elgens.com.tw/wp-content/uploads/2026/08/Mafia-1U-PQC-Gateway-Datasheet_20260813A.pdf" target="_blank" class="download-card d-flex flex-column justify-content-center align-items-center text-decoration-none">
                 <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/datasheet.png" class="mb-3" width="50">
                 <span>Datasheet</span>
               </a>
             </div>
-			<div class="col-md-4 col-6">
-              <a href="ttps://www.elgens.com.tw/wp-content/uploads/2026/09/Shelby_PQC_Gateway_Technical_Whitepaper_20260903E.pdf" target="_blank" class="download-card deep-blue d-flex flex-column justify-content-center align-items-center text-decoration-none">
+            <div class="col-md-4 col-6">
+              <a href="https://www.elgens.com.tw/wp-content/uploads/2026/09/Shelby_PQC_Gateway_Technical_Whitepaper_20260903E.pdf" target="_blank" class="download-card deep-blue d-flex flex-column justify-content-center align-items-center text-decoration-none">
                 <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/drawing.png" class="mb-3" width="50">
                 <span>Whitepaper</span>
               </a>
@@ -544,11 +505,9 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
-
 <!-- CTA Section -->
 <section class="cta-section text-white text-center d-flex align-items-center">
   <div class="overlay"></div>
@@ -562,7 +521,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     </div>
   </div>
 </section>
-
 <!-- Related Products -->
 <section class="related-products py-5 pb-0">
   <div class="container text-center">
@@ -581,9 +539,7 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     <img src="https://www.elgens.com.tw/wp-content/uploads/2026/03/big-logo.png" class="d-block d-md-none" style="width:100%;margin:20px 0;">
   </div>
 </section>
-
 <button id="goTop" aria-label="Back to top">&#8679;</button>
-
 <footer class="elgens-custom-footer">
   <div class="container">
     <div class="row align-items-center">
@@ -598,7 +554,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     </div>
   </div>
 </footer>
-
 <!-- Certification Modal -->
 <div class="modal fade" id="downloadModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
@@ -624,7 +579,6 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
     </div>
   </div>
 </div>
-
 <!-- ==================== Lightbox ==================== -->
 <div class="lightbox-overlay" id="lbOverlay" role="dialog" aria-modal="true" aria-label="Image Lightbox">
   <div class="lightbox-inner" id="lbInner">
@@ -643,9 +597,7 @@ p.lead{font-size:1.1rem;line-height:1.6;opacity:0.9;}
   </button>
   <div class="lightbox-counter" id="lbCounter"></div>
 </div>
-
 </div><!-- /#elgens-page-wrap -->
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
@@ -655,7 +607,6 @@ var thumbs=document.querySelectorAll('.thumb');
 var prevBtn=document.querySelector('.prev');
 var nextBtn=document.querySelector('.next');
 var current=0;
-
 function showSlide(index){
   slides.forEach(function(s){s.classList.remove('active');});
   thumbs.forEach(function(t){t.classList.remove('active');});
@@ -666,7 +617,6 @@ function showSlide(index){
 if(prevBtn){prevBtn.addEventListener('click',function(){showSlide(current-1<0?slides.length-1:current-1);});}
 if(nextBtn){nextBtn.addEventListener('click',function(){showSlide(current+1>=slides.length?0:current+1);});}
 thumbs.forEach(function(thumb){thumb.addEventListener('click',function(){showSlide(parseInt(thumb.dataset.index));});});
-
 // ==================== Scroll Reveal ====================
 document.addEventListener('DOMContentLoaded',function(){
   var revealOnScroll=function(){
@@ -675,18 +625,15 @@ document.addEventListener('DOMContentLoaded',function(){
   };
   window.addEventListener('scroll',revealOnScroll);revealOnScroll();
 });
-
 // ==================== Back to Top ====================
 document.addEventListener('DOMContentLoaded',function(){
   var btn=document.getElementById('goTop');
   window.addEventListener('scroll',function(){btn.style.display=window.scrollY>300?'flex':'none';});
   btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 });
-
 // ==================== Social Share ====================
 document.getElementById('fbShare').onclick=function(e){e.preventDefault();window.open('https://www.facebook.com/elgens/','_blank','noopener,noreferrer,width=800,height=600');};
 document.getElementById('liShare').onclick=function(e){e.preventDefault();window.open('https://www.linkedin.com/company/elgens','_blank','noopener,noreferrer,width=800,height=600');};
-
 // ==================== Related Products Swiper ====================
 new Swiper('.product-swiper',{
   loop:false,spaceBetween:24,slidesPerView:3,slidesPerGroup:1,speed:500,
@@ -694,7 +641,6 @@ new Swiper('.product-swiper',{
   navigation:{nextEl:'.swiper-button-next',prevEl:'.swiper-button-prev'},
   breakpoints:{0:{slidesPerView:1,slidesPerGroup:1},768:{slidesPerView:2,slidesPerGroup:1},1200:{slidesPerView:3,slidesPerGroup:1}}
 });
-
 // ==================== Lightbox ====================
 (function(){
   var overlay   = document.getElementById('lbOverlay');
@@ -703,15 +649,12 @@ new Swiper('.product-swiper',{
   var lbPrev    = document.getElementById('lbPrev');
   var lbNext    = document.getElementById('lbNext');
   var lbCounter = document.getElementById('lbCounter');
-
   var lbImages = [];
   var lbIndex  = 0;
-
   function collectImages(){
     lbImages=[];
     document.querySelectorAll('[data-lightbox="product"]').forEach(function(img){lbImages.push(img.src);});
   }
-
   function updateLightbox(){
     lbImg.style.animation='none';
     lbImg.offsetHeight;
@@ -721,7 +664,6 @@ new Swiper('.product-swiper',{
     lbPrev.classList.toggle('hidden',lbImages.length<=1);
     lbNext.classList.toggle('hidden',lbImages.length<=1);
   }
-
   function openLightbox(index){
     collectImages();
     if(!lbImages.length)return;
@@ -730,12 +672,10 @@ new Swiper('.product-swiper',{
     overlay.classList.add('open');
     document.body.style.overflow='hidden';
   }
-
   function closeLightbox(){
     overlay.classList.remove('open');
     document.body.style.overflow='';
   }
-
   // 點擊主圖開啟
   var sliderContainer=document.querySelector('.slider-container');
   if(sliderContainer){
@@ -747,15 +687,12 @@ new Swiper('.product-swiper',{
       }
     });
   }
-
   // 左右切換
   lbPrev.addEventListener('click',function(e){e.stopPropagation();lbIndex=(lbIndex-1+lbImages.length)%lbImages.length;updateLightbox();});
   lbNext.addEventListener('click',function(e){e.stopPropagation();lbIndex=(lbIndex+1)%lbImages.length;updateLightbox();});
-
   // 關閉
   lbClose.addEventListener('click',closeLightbox);
   overlay.addEventListener('click',function(e){if(e.target===overlay)closeLightbox();});
-
   // 鍵盤操作
   document.addEventListener('keydown',function(e){
     if(!overlay.classList.contains('open'))return;
@@ -763,7 +700,6 @@ new Swiper('.product-swiper',{
     else if(e.key==='ArrowLeft'){lbIndex=(lbIndex-1+lbImages.length)%lbImages.length;updateLightbox();}
     else if(e.key==='ArrowRight'){lbIndex=(lbIndex+1)%lbImages.length;updateLightbox();}
   });
-
   // 觸控 swipe 支援
   var touchStartX=0;
   overlay.addEventListener('touchstart',function(e){touchStartX=e.changedTouches[0].screenX;},{passive:true});
