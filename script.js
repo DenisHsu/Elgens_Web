@@ -194,3 +194,22 @@ document.querySelector('.brochure-action')?.addEventListener('click', () => {
     });
   }
 });
+
+
+const edmPreview = document.querySelector('.edm-preview');
+const edmDialog = document.querySelector('#edm-lightbox');
+if (edmPreview && edmDialog) {
+  edmPreview.addEventListener('click', () => {
+    edmDialog.showModal();
+    document.body.classList.add('edm-open');
+  });
+  edmDialog.querySelector('.edm-close').addEventListener('click', () => edmDialog.close());
+  edmDialog.addEventListener('click', (event) => {
+    const bounds = edmDialog.getBoundingClientRect();
+    if (event.target === edmDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) edmDialog.close();
+  });
+  edmDialog.addEventListener('close', () => {
+    document.body.classList.remove('edm-open');
+    edmPreview.focus({ preventScroll: true });
+  });
+}
