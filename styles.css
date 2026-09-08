@@ -139,7 +139,12 @@ p { font: 500 max(16px, calc(22 * var(--u)))/1.636 var(--body-font); }
 .monitor-stack { position: relative; height: calc(590 * var(--u)); margin-right: calc(-145 * var(--u)); }
 .monitor-stack img:first-child { position: absolute; left: 0; top: 0; width: 88%; height: calc(390 * var(--u)); object-fit: contain; }
 .monitor-stack img + img { position: absolute; left: 15%; top: calc(205 * var(--u)); width: 100%; height: calc(455 * var(--u)); object-fit: contain; }
-.shelby { min-height: calc(914 * var(--u)); background: linear-gradient(90deg,var(--panel) 28%,#031d3560 75%),url('./assets/img212346296Xl2.png') center/cover; }
+/* Background fills the card; the desktop product image may extend beyond it. */
+.shelby {
+  min-height: calc(914 * var(--u));
+  background: linear-gradient(90deg, #031d35ed 20%, #031d3560 75%),
+    url('./assets/img212346296Xl2.png') center / cover no-repeat;
+}
 .shelby h3 { margin-left: calc(15 * var(--u)); margin-bottom: calc(50 * var(--u)); }
 .shelby .split-inner { grid-template-columns: 52% 48%; }
 .shelby .split-inner > div > p + p { margin-top: calc(36 * var(--u)); }
@@ -650,4 +655,21 @@ body.edm-open { overflow: hidden; }
   .shelby .product-content > h3 { margin: 0; }
   .shelby .gateway-tagline { margin: 0; }
   .shelby .gateway-media > .badges { margin: 0; }
+}
+
+/* Compact 4K monitor introduction above applications. */
+.rugged-4k { background: #01162a; padding: 36px 0 28px; }
+.rugged-4k-inner { display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); align-items: center; gap: 28px; padding: clamp(20px, 2vw, 32px); border: 1px solid #657482; border-radius: 4px; background: #031d35 url('./assets/rugged-4k-bg.png') center / cover no-repeat; }
+.rugged-4k-copy h2 { color: var(--primary); font-size: clamp(26px, 2.3vw, 44px); line-height: 1.2; margin-bottom: 24px; text-transform: none; }
+.rugged-4k-copy p + p { margin-top: 22px; }
+.rugged-4k-media { position: relative; aspect-ratio: 1.25; min-width: 0; }
+.rugged-4k-media img { position: absolute; width: 75%; height: auto; object-fit: contain; }
+.rugged-4k-chart { top: 0; right: 0; }
+.rugged-4k-uav { bottom: 0; left: 0; }
+@media (max-width: 800px) {
+  .rugged-4k { padding: 28px 0 16px; }
+  .rugged-4k-inner { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .rugged-4k-media { order: -1; width: min(100%, 400px); margin: 0 auto; }
+  .rugged-4k-copy h2 { font-size: 26px; margin-bottom: 18px; }
+  .rugged-4k-copy p + p { margin-top: 18px; }
 }
