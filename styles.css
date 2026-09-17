@@ -174,6 +174,16 @@ p { font: 500 max(16px, calc(22 * var(--u)))/1.636 var(--body-font); }
 .visit h2 { margin: 0 auto; color: var(--primary); font-size: calc(38 * var(--u)); line-height: 1.03; }
 .visit .button { width: calc(522 * var(--u)); min-height: calc(100 * var(--u)); margin-top: 32px; font-size: calc(30 * var(--u)); box-shadow: inset 0 -1px #eb8d00,inset 0 4px #d65a00; }
 .visit .button img { width: calc(38 * var(--u)); height: calc(36 * var(--u)); object-fit: contain; }
+.media-coverage { width: min(84%,1180px); margin: calc(72 * var(--u)) auto 0; text-align: left; }
+.media-coverage h3 { color: #fff; font-size: max(16px, calc(20 * var(--u))); letter-spacing: .08em; text-align: center; margin-bottom: 24px; }
+.media-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.media-card { display: flex; flex-direction: column; border: 1px solid #657482; border-radius: 4px; overflow: hidden; background: #031526; text-decoration: none; transition: border-color .3s, box-shadow .3s; }
+.media-card-logo { display: flex; align-items: center; justify-content: center; min-height: 84px; padding: 16px 20px; background: linear-gradient(#eef1f3e6,#eef1f3e6), url('./assets/media-card-bg.jpg') center/cover no-repeat, #eef1f3; }
+.media-card-logo img { max-width: 100%; max-height: 38px; width: auto; height: auto; object-fit: contain; }
+.media-card-body { flex: 1; padding: 20px; background: var(--primary); }
+.media-card-body h4 { margin: 0 0 10px; color: #fff; font-size: 17px; line-height: 1.35; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #fff; text-transform: none; }
+.media-card-body p { margin: 0; color: #fff0e2; font-size: 14px; line-height: 1.55; }
+.media-card:hover { border-color: var(--primary); box-shadow: 0 12px 30px #0006, 0 0 18px #ee780033; }
 footer { background: #fff; color: #1e212c; }
 footer > div { width: min(71%,1364px); min-height: 76px; margin: auto; display: flex; align-items: center; gap: 16px; }
 footer p,footer a,.social-label { font: 400 14px/1.8 'IBM Plex Sans',sans-serif; }
@@ -223,6 +233,7 @@ body.menu-open { overflow: hidden; }
   .gateway-media { padding-left: 20px; }
   .gateway-media .badges { flex-wrap: wrap; }
   .brochure-action { font-size: 15px; }
+  .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   footer > div { flex-wrap: wrap; padding: 18px 0; }
 }
 @media (max-width: 800px) {
@@ -293,6 +304,8 @@ body.menu-open { overflow: hidden; }
   .visit h2 { font-size: 26px; line-height: 1.2; }
   .visit .button { width: min(100%,360px); min-height: 64px; margin-top: 28px; font-size: 20px; }
   .visit .button img { width: 26px; height: 26px; }
+  .media-coverage { width: 100%; margin-top: 40px; }
+  .media-grid { grid-template-columns: 1fr; gap: 14px; }
   footer > div { width: calc(100% - 40px); gap: 12px; }
   footer p { width: 100%; margin: 0; }
 }
