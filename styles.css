@@ -178,8 +178,10 @@ p { font: 500 max(16px, calc(22 * var(--u)))/1.636 var(--body-font); }
 .media-coverage h3 { color: #fff; font-size: max(16px, calc(20 * var(--u))); letter-spacing: .08em; text-align: center; margin-bottom: 24px; }
 .media-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .media-card { display: flex; flex-direction: column; border: 1px solid #657482; border-radius: 4px; overflow: hidden; background: #031526; text-decoration: none; transition: border-color .3s, box-shadow .3s; }
-.media-card-logo { display: flex; align-items: center; justify-content: center; min-height: 84px; padding: 16px 20px; background: linear-gradient(#eef1f3e6,#eef1f3e6), url('./assets/media-card-bg.jpg') center/cover no-repeat, #eef1f3; }
-.media-card-logo img { max-width: 100%; max-height: 38px; width: auto; height: auto; object-fit: contain; }
+.media-card-logo { display: flex; align-items: center; justify-content: center; min-height: 120px; padding: 18px 22px; background: linear-gradient(#eef1f3e6,#eef1f3e6), url('./assets/media-card-bg.jpg') center/cover no-repeat, #eef1f3; }
+.media-card-logo img { max-width: 100%; max-height: 44px; width: auto; height: auto; object-fit: contain; }
+.media-grid .media-card:nth-child(2) .media-card-logo img { max-height: 58px; }
+.media-grid .media-card:nth-child(3) .media-card-logo img { max-height: 66px; }
 .media-card-body { flex: 1; padding: 20px; background: var(--primary); }
 .media-card-body h4 { margin: 0 0 10px; color: #fff; font-size: 17px; line-height: 1.35; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: #fff; text-transform: none; }
 .media-card-body p { margin: 0; color: #fff0e2; font-size: 14px; line-height: 1.55; }
