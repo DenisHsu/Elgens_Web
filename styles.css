@@ -96,7 +96,7 @@ p { font: 500 max(16px, calc(22 * var(--u)))/1.636 var(--body-font); }
 .event-info::after { content: ''; position: absolute; right: calc(138 * var(--u)); top: 0; bottom: 0; width: 1px; background: #9fb2c680; }
 .scroll-cue { position: absolute; left: 50%; bottom: calc(-48 * var(--u)); translate: -50% 0; width: calc(97 * var(--u)); height: calc(97 * var(--u)); z-index: 2; border-radius: 50%; display: grid; place-items: center; background: var(--primary); }
 .scroll-cue img { width: 40%; height: 40%; object-fit: contain; transform: rotate(-90deg); }
-.solutions { padding: calc(160 * var(--u)) 0 calc(56 * var(--u)); overflow: clip; background: #04273b url('./assets/imgRectangle.webp') center top / cover no-repeat fixed; }
+.solutions { padding: calc(160 * var(--u)) 0 calc(56 * var(--u)); overflow: clip; background: #04273b url('https://elgens.com.tw/defense-events/assets/imgRectangle.webp') center top / cover no-repeat fixed; }
 .section-heading { text-align: center; }
 .section-heading h2 { font-size: calc(48 * var(--u)); line-height: 1.2; }
 .solutions > .section-heading { margin-bottom: calc(177 * var(--u)); }
@@ -144,7 +144,7 @@ p { font: 500 max(16px, calc(22 * var(--u)))/1.636 var(--body-font); }
 .shelby {
   min-height: calc(914 * var(--u));
   background: linear-gradient(90deg, #031d35ed 20%, #031d3560 75%),
-    url('./assets/img212346296Xl2.webp') center / cover no-repeat;
+    url('https://elgens.com.tw/defense-events/assets/img212346296Xl2.webp') center / cover no-repeat;
 }
 .shelby h2 { margin-left: calc(15 * var(--u)); margin-bottom: calc(50 * var(--u)); }
 .shelby .split-inner { grid-template-columns: 52% 48%; }
@@ -162,7 +162,7 @@ p { font: 500 max(16px, calc(22 * var(--u)))/1.636 var(--body-font); }
 .application-card { min-width: 0; overflow: hidden; border: 1px solid #657482; border-radius: 4px; background: #031526; }
 .application-card img { width: 100%; aspect-ratio: 1.45; object-fit: cover; }
 .application-card figcaption { text-transform: uppercase; display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 10px 6px; font-size: max(16px, calc(20 * var(--u))); line-height: 1.3; text-align: center; }
-.brochure { display: grid; grid-template-columns: 38% minmax(0, 1fr); align-items: center; margin-top: calc(45 * var(--u)); border: 1px solid #657482; border-radius: 4px; background: #031d35 url('./assets/bg.webp') center / cover no-repeat; }
+.brochure { display: grid; grid-template-columns: 38% minmax(0, 1fr); align-items: center; margin-top: calc(45 * var(--u)); border: 1px solid #657482; border-radius: 4px; background: #031d35 url('https://elgens.com.tw/defense-events/assets/bg.webp') center / cover no-repeat; }
 /* Standalone booklet artwork, displayed without cropping. */
 .brochure-art { padding: clamp(16px, 2vw, 32px); }
 .brochure-art img { width: 100%; max-width: 675px; height: auto; object-fit: contain; margin: auto; }
@@ -678,7 +678,7 @@ body.edm-open { overflow: hidden; }
 
 /* Compact 4K monitor introduction above applications. */
 .rugged-4k { background: #01162a; padding: 36px 0 28px; }
-.rugged-4k-inner { position: relative; display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); align-items: center; gap: 28px; padding: clamp(20px, 2vw, 32px); border: 1px solid #657482; border-radius: 4px; transition: border-color .3s ease, box-shadow .3s ease; background: #031d35 url('./assets/rugged-4k-bg.webp') center / cover no-repeat; }
+.rugged-4k-inner { position: relative; display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); align-items: center; gap: 28px; padding: clamp(20px, 2vw, 32px); border: 1px solid #657482; border-radius: 4px; transition: border-color .3s ease, box-shadow .3s ease; background: #031d35 url('https://elgens.com.tw/defense-events/assets/rugged-4k-bg.webp') center / cover no-repeat; }
 .rugged-4k-copy h2 { color: var(--primary); font-size: clamp(26px, 2.3vw, 44px); line-height: 1.2; margin-bottom: 24px; text-transform: none; }
 .rugged-4k-copy p + p { margin-top: 22px; }
 .rugged-4k-media { position: relative; aspect-ratio: 1.25; min-width: 0; }
