@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <!-- <base href="/new_Home/"> -->
+    <base href="/new_Home/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="shortcut icon" href="https://www.elgens.com.tw/wp-content/uploads/2020/07/cropped-fa_icon-32x32.png" />
-    <link rel="preload" as="image" href="assets/images/home/banner-poster.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="https://www.elgens.com.tw/new_Home/assets/images/home/banner-poster.webp" fetchpriority="high">
     <title>ELGENS | Defense Monitors & Rugged Panel PCs — MIL STD 704F/461G/1275E/810H Solutions</title>
     <meta name="description" content="Military- and marine-grade displays and panel PCs. MIL-STD-461/1275E/810H/704F and IEC 60945, sunlight-readable 1000–1500 nits, wide temperature, IP protection, optical bonding, MIL connectors, long-term supply, customization.">
     <meta name="keywords" content="military display, marine display, naval rugged display, rugged defense display, rugged panel pc, MIL-STD-461, MIL-STD-1275E, MIL-STD-810H, MIL-STD-704F, IEC 60945, sunlight readable display, 1000 nits, 1500 nits, wide temperature, IP65, IP67, optical bonding, MIL connectors, naval bridge display, marine panel pc, defense panel pc, EMI/EMC compliant display, vehicle power conditioning, long-term supply, customization.">
@@ -101,6 +101,52 @@
     body.nav-fixed {
       padding-top: 140px;
     }
+
+    /* ══ 右側浮動活動按鈕 (Defense Events) ══ */
+    .l-event-float {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 990;                 /* 低於 header 選單(1000)、Email Gate(9999)，高於 float tools(50) */
+      display: block;
+      line-height: 0;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;  /* iOS 長按不跳出圖片選單 */
+      touch-action: manipulation;   /* 移除點擊延遲 */
+      transition: filter .25s ease;
+    }
+    .l-event-float__stack { position: relative; display: block; }
+    .l-event-float img {
+      display: block;
+      width: clamp(100px, 8vw, 130px);  /* 桌機：原圖 240x400 */
+      height: auto;
+      aspect-ratio: 240 / 400;
+      box-shadow: -4px 4px 18px rgba(0, 0, 0, .45);
+    }
+    .l-event-float__hover {
+      position: absolute;
+      inset: 0;
+      display: block;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .l-event-float__hover img { width: 100%; height: 100%; object-fit: cover; }
+    /* 桌機：滑鼠移過去換圖 */
+    @media (hover: hover) and (pointer: fine) {
+      .l-event-float:hover .l-event-float__hover,
+      .l-event-float:focus-visible .l-event-float__hover { opacity: 1; }
+      .l-event-float:hover { filter: brightness(1.05); }
+    }
+    /* 手機 / 觸控：按下時換圖 */
+    .l-event-float.is-pressed .l-event-float__hover { opacity: 1; }
+    .l-event-float:focus-visible { outline: 2px solid #ee7700; outline-offset: 2px; }
+    @media (max-width: 991.98px) {
+      .l-event-float img {
+        width: 76px;                /* 手機：原圖 240x240 正方形 */
+        aspect-ratio: 1 / 1;
+      }
+    }
     </style>
 </head>
 <body class="view-home layout-index route-index">
@@ -109,7 +155,7 @@
         <a class="brand"
             onclick="gtag('event', 'feature_click', { 'feature_section': 'Float Tools', 'feature_title': 'Home_Logo' });"
             href="https://www.elgens.com.tw/" aria-label="ELGENS Home">
-            <img src="https://www.elgens.com.tw/wp-content/uploads/2026/09/elgens_logo_2026_09_01.png"
+            <img src="https://www.elgens.com.tw/new_Home/assets/images/home/elgens_logo.png"
                 alt="ELGENS Logo" style="width: auto; height: 60px;" />
         </a>
 
@@ -254,11 +300,14 @@
                     <button class="submenu-toggle" aria-label="展開 Defense 子選單" aria-expanded="false">▾</button>
                     <ul class="menu level-2">
                         <li class="menu-item has-children">
-                            <a href="#">PQC and Edge Security</a>
+                            <a href="#">PQC and AI Servers</a>
                             <button class="submenu-toggle" aria-label="展開子選單" aria-expanded="false">▾</button>
                             <ul class="menu level-3">
                                 <li class="menu-item">
-                                    <a href="https://www.elgens.com.tw/defense/pqc-and-edge-security/x-corleone-series/">X-Corleone</a>
+                                    <a href="https://www.elgens.com.tw/defense/pqc-and-ai-servers/x-corleone-series/">X-Corleone</a>
+                                </li>
+                                <li class="menu-item">
+                                    <a href="https://www.elgens.com.tw/defense/pqc-and-ai-servers/shelby-1u-pqc-gateway/">Shelby 1U PQC Gateway Series</a>
                                 </li>
                             </ul>
                         </li>
@@ -396,7 +445,7 @@
                                     <button class="submenu-toggle" aria-label="展開子選單" aria-expanded="false">▾</button>
                                     <ul class="menu level-4">
                                         <li class="menu-item">
-                                            <a href="https://www.elgens.com.tw/defense/rugged-bar-type-display/cockpit-display/ldk-d256/">LKD-D256</a>
+                                            <a href="https://www.elgens.com.tw/defense/rugged-bar-type-display/cockpit-display/ldk-d256/">LDK-D256</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -549,8 +598,8 @@
     <div data-bs-theme="dark">
         <section class="l-section l-section--banner vh-100 position-relative">
             <div class="c-video-wrapper h-100">
-                <video class="w-100 h-100 object-fit-cover" autoplay muted playsinline loop poster="assets/images/home/banner-poster.webp" id="hero-video">
-                    <source src="assets/images/home/banner-video.mp4?dfbb9efafcf0b1187493a7e8" type="video/mp4">
+                <video class="w-100 h-100 object-fit-cover" autoplay muted playsinline loop poster="https://www.elgens.com.tw/new_Home/assets/images/home/banner-poster.webp" id="hero-video">
+                    <source src="https://www.elgens.com.tw/new_Home/assets/images/home/banner-video.mp4?dfbb9efafcf0b1187493a7e8" type="video/mp4">
                 </video>
                 <script>
                 (function() {
@@ -611,7 +660,7 @@
                     <div class="col-xxl-4 px-lg-0">
                         <div class="card p-xl-40px p-28px d-flex flex-column h-100 position-relative">
                             <div class="c-card-img mb-20px">
-                                <img src="assets/images/home/services-1.png?dfbb9efafcf0b1187493a7e8" class="card-img-top" alt="Navy Displays" loading="lazy">
+                                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/services-1.png?dfbb9efafcf0b1187493a7e8" class="card-img-top" alt="Navy Displays" loading="lazy">
                             </div>
                             <div class="card-body p-0 d-flex flex-column">
                                 <h3 class="h2 fs-lg-4 fs-6 text-primary mb-3">Navy Displays</h3>
@@ -633,7 +682,7 @@
                     <div class="col-xxl-4 px-lg-0">
                         <div class="card p-xl-40px p-28px d-flex flex-column h-100 position-relative">
                             <div class="c-card-img mb-20px">
-                                <img src="assets/images/home/services-2.png?dfbb9efafcf0b1187493a7e8" class="card-img-top" alt="Military Displays" loading="lazy">
+                                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/services-2.png?dfbb9efafcf0b1187493a7e8" class="card-img-top" alt="Military Displays" loading="lazy">
                             </div>
                             <div class="card-body p-0 d-flex flex-column">
                                 <h3 class="h2 fs-lg-4 fs-6 text-primary mb-3">Military Displays</h3>
@@ -655,7 +704,7 @@
                     <div class="col-xxl-4 px-lg-0">
                         <div class="card p-xl-40px p-28px d-flex flex-column h-100 position-relative">
                             <div class="c-card-img mb-20px">
-                                <img src="assets/images/home/services-3.png?dfbb9efafcf0b1187493a7e8" class="card-img-top" alt="Defense Server" loading="lazy">
+                                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/services-3.png?dfbb9efafcf0b1187493a7e8" class="card-img-top" alt="Defense Server" loading="lazy">
                             </div>
                             <div class="card-body p-0 d-flex flex-column">
                                 <h3 class="h2 fs-lg-4 fs-6 text-primary mb-3">Defense Server</h3>
@@ -677,7 +726,7 @@
                     <div class="col-xxl-12 px-lg-0">
                         <div class="card flex-xxl-row p-xl-40px p-28px gap-lg-40px position-relative">
                             <div class="c-card-img mb-lg-0 mb-20px flex-shrink-0">
-                                <img src="assets/images/home/services-4.png?dfbb9efafcf0b1187493a7e8" class="card-img-top object-fit-cover" alt="Custom Integration" loading="lazy">
+                                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/services-4.png?dfbb9efafcf0b1187493a7e8" class="card-img-top object-fit-cover" alt="Custom Integration" loading="lazy">
                             </div>
                             <div class="card-body p-0">
                                 <h3 class="h2 fs-lg-4 fs-6 text-primary mb-3">Custom Integration</h3>
@@ -723,7 +772,7 @@
                                     <h3 class="h3 fs-lg-6 fs-7 mb-4">RacK Mount - TDM D Series (-40°C~70°C)</h3>
                                     <div class="d-block d-lg-none c-feature-img flex-shrink-0 mb-lg-0 mb-4">
                                         <div class="bg-dot pt-4 pb-4 text-center">
-                                            <img src="assets/images/home/TDM-P240WH5TAGF-RND2_Front.png" alt="RacK Mount - TDM D Series (-40°C~70°C)" class="w-100" loading="lazy">
+                                            <img src="https://www.elgens.com.tw/new_Home/assets/images/home/TDM-P240WH5TAGF-RND2_Front.png" alt="RacK Mount - TDM D Series (-40°C~70°C)" class="w-100" loading="lazy">
                                         </div>
                                     </div>
                                     <span class="border border-dark d-inline-block px-12px mb-4">Benefits</span>
@@ -738,7 +787,7 @@
                                 </div>
                                 <div class="d-none d-lg-block c-feature-img flex-shrink-0 mb-lg-0 mb-4">
                                     <div class="bg-dot pt-4 pb-4">
-                                        <img src="assets/images/home/TDM-P240WH5TAGF-RND2_Front.png" alt="RacK Mount - TDM D Series (-40°C~70°C)" class="w-100" loading="lazy">
+                                        <img src="https://www.elgens.com.tw/new_Home/assets/images/home/TDM-P240WH5TAGF-RND2_Front.png" alt="RacK Mount - TDM D Series (-40°C~70°C)" class="w-100" loading="lazy">
                                     </div>
                                 </div>
                             </div>
@@ -778,7 +827,7 @@
                                     <h3 class="h3 fs-lg-6 fs-7 mb-4">IEC-60945 Panel PC (-30~70°C)</h3>
                                     <div class="d-block d-lg-none c-feature-img flex-shrink-0 mb-lg-0 mb-4">
                                         <div class="bg-dot pt-4 pb-4 text-center">
-                                            <img src="assets/images/home/products-4.png?dfbb9efafcf0b1187493a7e8" alt="IEC-60945 Panel PC (-30~70°C)" class="w-100" loading="lazy">
+                                            <img src="https://www.elgens.com.tw/new_Home/assets/images/home/products-4.png?dfbb9efafcf0b1187493a7e8" alt="IEC-60945 Panel PC (-30~70°C)" class="w-100" loading="lazy">
                                         </div>
                                     </div>
                                     <span class="border border-dark d-inline-block px-12px mb-4">Benefits</span>
@@ -792,7 +841,7 @@
                                 </div>
                                 <div class="d-none d-lg-block c-feature-img flex-shrink-0 mb-lg-0 mb-4">
                                     <div class="bg-dot pt-4 pb-4">
-                                        <img src="assets/images/home/products-4.png?dfbb9efafcf0b1187493a7e8" alt="IEC-60945 Panel PC (-30~70°C)" class="w-100" loading="lazy">
+                                        <img src="https://www.elgens.com.tw/new_Home/assets/images/home/products-4.png?dfbb9efafcf0b1187493a7e8" alt="IEC-60945 Panel PC (-30~70°C)" class="w-100" loading="lazy">
                                     </div>
                                 </div>
                             </div>
@@ -839,34 +888,34 @@
                     <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 01.</span></span>
                         <div class="row g-0">
                             <div class="col-md-8 mb-40px mb-lg-0"><div class="card-body p-0 pe-lg-40px"><h3 class="h3 fs-lg-6 fs-7 text-primary mb-lg-40px mb-20px">ELGENS Panel PC for JMSDF Engine Room – Real-Time Monitoring</h3><p class="lh-180">The LPC-P190SH-XX 19-inch panel PC is installed in the engine room control center of Japan Maritime Self-Defense Force vessels, providing commanders with real-time, precise system monitoring. Its anti-glare coating and 1000-nit high-brightness display ensure clear visibility even under direct sunlight, reducing eye strain. Built to IEC-60945 standards and operating between -20°C and 70°C, it delivers reliable performance in harsh maritime and engine room conditions, meeting JMSDF's demanding mission needs.</p></div></div>
-                            <div class="col-md-4"><img src="assets/images/home/case-1.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case1_ELGENS Panel PC for JMSDF Engine Room" width="800" height="600"></div>
+                            <div class="col-md-4"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/case-1.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case1_ELGENS Panel PC for JMSDF Engine Room" width="800" height="600"></div>
                         </div>
                     </div>
                     <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 02.</span></span>
                         <div class="row g-0">
                             <div class="col-md-8 mb-40px mb-lg-0"><div class="card-body p-0 pe-lg-40px"><h3 class="h3 fs-lg-6 fs-7 text-primary mb-lg-40px mb-20px">ELGENS Panel PC for Hillside Recon – Situational Awareness</h3><p class="lh-180">ELGENS offers a 12.1-inch widescreen panel PC (model LPC-P121W-xx) designed for reconnaissance and attack command in harsh military environments. Installed on portable rocket systems on hills, it detects and collects key enemy supply and patrol data, then executes attack commands. The panel PC operates down to -30°C and features a 1000-nit high-brightness display for clear outdoor visibility. It enhances battlefield awareness and rapid response, improving command efficiency.</p></div></div>
-                            <div class="col-md-4"><img src="assets/images/home/case-2.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case2_ELGENS Panel PC for Hillside Recon" width="800" height="600"></div>
+                            <div class="col-md-4"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/case-2.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case2_ELGENS Panel PC for Hillside Recon" width="800" height="600"></div>
                         </div>
                     </div>
                     <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 03.</span></span>
                         <div class="row g-0">
                             <div class="col-md-8 mb-40px mb-lg-0"><div class="card-body p-0 pe-lg-40px"><h3 class="h3 fs-lg-6 fs-7 text-primary mb-lg-40px mb-20px">ELGENS Panel PC for Indian Navy Vessels – All-Weather Visibility</h3><p class="lh-180">Featuring a bright 1500-nit LED backlight with brightness controls, it ensures clear visibility in all conditions. Operating reliably from -30°C to 70°C, its SUL316 stainless steel enclosure offers IP66 waterproof and dustproof protection on all sides. Optical bonding enhances display clarity and durability.<br /><br />This rugged panel PC delivers high performance and reliability to support command operations at sea.</p></div></div>
-                            <div class="col-md-4"><img src="assets/images/home/case-3.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case3_ELGENS Panel PC for Indian Navy Vessels" width="800" height="600"></div>
+                            <div class="col-md-4"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/case-3.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case3_ELGENS Panel PC for Indian Navy Vessels" width="800" height="600"></div>
                         </div>
                     </div>
                     <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 04.</span></span>
                         <div class="row g-0">
                             <div class="col-md-8 mb-40px mb-lg-0"><div class="card-body p-0 pe-lg-40px"><h3 class="h3 fs-lg-6 fs-7 text-primary mb-lg-40px mb-20px">ELGENS Panel PC for Naval Deck – Extreme Temp Stability</h3><p class="lh-180">It operates reliably in temperatures from -30°C to 70°C and features 1500 nits brightness with 1024 adjustable levels, including a very low setting of 1-2 nits. The monitor supports 1 HDMI, 1 DisplayPort, RS-232 for remote control, and RS-485 for multi-monitor connection. Customized Picture-in-Picture software enhances flexibility.<br /><br />This rugged marine-grade monitor ensures reliable performance and precise remote control for demanding naval operations.</p></div></div>
-                            <div class="col-md-4"><img src="assets/images/home/case-4.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case4_ELGENS Panel PC for Naval Deck" width="800" height="600"></div>
+                            <div class="col-md-4"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/case-4.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case4_ELGENS Panel PC for Naval Deck" width="800" height="600"></div>
                         </div>
                     </div>
                     <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 05.</span></span>
                         <div class="row g-0">
                             <div class="col-md-8 mb-40px mb-lg-0"><div class="card-body p-0 pe-lg-40px"><h3 class="h3 fs-lg-6 fs-7 text-primary mb-lg-40px mb-20px">ELGENS Panel PC for Forward Operating Base – Genset Control</h3><p class="lh-180">ELGENS provides rugged panel PCs designed for outdoor command bases, installed on generator trucks as core control units. They ensure stable operation and uninterrupted monitoring in harsh environments.<br /><br />With heat dissipation technology supporting -30 to 70°C, these panel PCs withstand extreme weather, enabling rapid military deployment and improved battlefield command efficiency.</p></div></div>
-                            <div class="col-md-4"><img src="assets/images/home/case-5.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case5_ELGENS Panel PC for Forward Operating Base" width="800" height="600"></div>
+                            <div class="col-md-4"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/case-5.png?dfbb9efafcf0b1187493a7e8" class="img-fluid" alt="Case5_ELGENS Panel PC for Forward Operating Base" width="800" height="600"></div>
                         </div>
                     </div>
-                    <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 06.</span></span>
+                     <div class="card d-block p-lg-40px p-28px"><span class="c-feature-deco text-primary fs-13 fw-normal mb-12px"><span>CASE 06.</span></span>
                         <div class="row g-0">
                             <div class="col-md-8 mb-40px mb-lg-0"><div class="card-body p-0 pe-lg-40px"><h3 class="h3 fs-lg-6 fs-7 text-primary mb-lg-40px mb-20px">ELGENS 7" Rugged Display for Maritime Patrol Cockpit Systems</h3><p class="lh-180">ELGENS provides 7-inch rugged display solutions for military avionics and maritime patrol cockpit systems, supporting mission-critical visualization, navigation awareness, and reliable operation in demanding defense environments. Designed for defense-grade integration, our displays help system integrators enhance platform reliability, situational awareness, and mission readiness.</p></div></div>
                             <div class="col-md-4"><img src="https://www.elgens.com.tw/wp-content/uploads/2026/08/317502757_xl-scaled.jpg" class="img-fluid" alt="Case6_ELGENS 7 Rugged Display for Maritime Patrol Cockpit Systems" width="800" height="600"></div>
@@ -897,7 +946,7 @@
                         </div>
                         <div class="l-content overflow-hidden">
                             <div class="l-content__container d-flex flex-xxl-row flex-column">
-                                <div class="c-feature-img"><img src="assets/images/home/certified-1.png?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-461G" class="img-fluid" loading="lazy"></div>
+                                <div class="c-feature-img"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/certified-1.png?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-461G" class="img-fluid" loading="lazy"></div>
                                 <div class="flex-grow-1 bg-primary border d-flex flex-column">
                                     <ul class="c-feature-list list-unstyled ps-0">
                                         <li class="c-feature-item justify-content-between" data-index="0"><a href="https://www.elgens.com.tw/defense/mil-std-461g/touch-monitor-d39/flush-mount/tdm-p215wh5tagf-fnd2/" target="_blank" onclick="gtag('event', 'feature_click', { 'feature_section': 'CERTIFIED PRODUCTS', 'feature_title': 'TDM-D215' });" class="d-flex justify-content-between align-items-center w-100"><span class="fs-11">TDM-D215</span><span class="c-link-more d-flex align-items-center fs-12">More Detail<span class="c-link-more__icon material-symbols-outlined fs-6">arrow_outward</span></span></a></li>
@@ -949,7 +998,7 @@
                         </div>
                         <div class="l-content overflow-hidden">
                             <div class="l-content__container d-flex flex-xxl-row flex-column">
-                                <div class="c-feature-img"><img src="assets/images/home/certified-3.png?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-810H" class="img-fluid" loading="lazy"></div>
+                                <div class="c-feature-img"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/certified-3.png?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-810H" class="img-fluid" loading="lazy"></div>
                                 <div class="flex-grow-1 bg-primary border d-flex flex-column">
                                     <ul class="c-feature-list list-unstyled ps-0">
                                         <li class="c-feature-item justify-content-between" data-index="0"><a href="https://www.elgens.com.tw/defense/mil-std-461g/panelpc/lpc-p156wag-2txd/" target="_blank" onclick="gtag('event', 'feature_click', { 'feature_section': 'CERTIFIED PRODUCTS', 'feature_title': 'LPC-P156W-2VET7/ No.1' });" class="d-flex justify-content-between align-items-center w-100"><span class="fs-11">LPC-P156W-2VET7/ No.1</span><span class="c-link-more d-flex align-items-center fs-12">More Detail<span class="c-link-more__icon material-symbols-outlined fs-6">arrow_outward</span></span></a></li>
@@ -972,7 +1021,7 @@
                         </div>
                         <div class="l-content overflow-hidden">
                             <div class="l-content__container d-flex flex-xxl-row flex-column">
-                                <div class="c-feature-img"><img src="assets/images/home/certified-4.png?dfbb9efafcf0b1187493a7e8" alt="EN50155" class="img-fluid" loading="lazy"></div>
+                                <div class="c-feature-img"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/certified-4.png?dfbb9efafcf0b1187493a7e8" alt="EN50155" class="img-fluid" loading="lazy"></div>
                                 <div class="flex-grow-1 bg-primary border d-flex flex-column">
                                     <ul class="c-feature-list list-unstyled ps-0">
                                         <li class="c-feature-item justify-content-between" data-index="0"><a href="https://www.elgens.com.tw/defense/mil-std-461g/panelpc/lpc-p156wag-2txd/" target="_blank" onclick="gtag('event', 'feature_click', { 'feature_section': 'CERTIFIED PRODUCTS', 'feature_title': 'LPC-P156W-2VET7/ No.1' });" class="d-flex justify-content-between align-items-center w-100"><span class="fs-11">LPC-P156W-2VET7/ No.1</span><span class="c-link-more d-flex align-items-center fs-12">More Detail<span class="c-link-more__icon material-symbols-outlined fs-6">arrow_outward</span></span></a></li>
@@ -988,7 +1037,7 @@
                         </div>
                         <div class="l-content overflow-hidden">
                             <div class="l-content__container d-flex flex-xxl-row flex-column">
-                                <div class="c-feature-img"><img src="assets/images/home/certified-5.png?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-1275E" class="img-fluid" loading="lazy"></div>
+                                <div class="c-feature-img"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/certified-5.png?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-1275E" class="img-fluid" loading="lazy"></div>
                                 <div class="flex-grow-1 bg-primary border d-flex flex-column">
                                     <ul class="c-feature-list list-unstyled ps-0">
                                         <li class="c-feature-item justify-content-between" data-index="0"><a href="https://www.elgens.com.tw/defense/mil-std-461g/touch-monitor-d39/flush-mount/tdm-p215wh5tagf-fnd2/" target="_blank" onclick="gtag('event', 'feature_click', { 'feature_section': 'CERTIFIED PRODUCTS', 'feature_title': 'TDM-D215' });" class="d-flex justify-content-between align-items-center w-100"><span class="fs-11">TDM-D215</span><span class="c-link-more d-flex align-items-center fs-12">More Detail<span class="c-link-more__icon material-symbols-outlined fs-6">arrow_outward</span></span></a></li>
@@ -1007,7 +1056,7 @@
                         </div>
                         <div class="l-content overflow-hidden">
                             <div class="l-content__container d-flex flex-xxl-row flex-column">
-                                <div class="c-feature-img"><img src="assets/images/home/TAF_Certificate of accreditation.jpg?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-704F" style="max-width: 260px;" class="img-fluid c-feature-img__text" loading="lazy"></div>
+                                <div class="c-feature-img"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/TAF_Certificate of accreditation.jpg?dfbb9efafcf0b1187493a7e8" alt="MIL-STD-704F" style="max-width: 260px;" class="img-fluid c-feature-img__text" loading="lazy"></div>
                                 <div class="flex-grow-1 bg-primary border d-flex flex-column">
                                     <ul class="c-feature-list list-unstyled ps-0">
                                         <li class="c-feature-item justify-content-between" data-index="0"><a href="https://www.elgens.com.tw/products/tdm-p240wh5tagf-fnd2/" target="_blank" onclick="gtag('event', 'feature_click', { 'feature_section': 'CERTIFIED PRODUCTS', 'feature_title': 'TDM-D240' });" class="d-flex justify-content-between align-items-center w-100"><span class="fs-11">TDM-D240</span><span class="c-link-more d-flex align-items-center fs-12">More Detail<span class="c-link-more__icon material-symbols-outlined fs-6">arrow_outward</span></span></a></li>
@@ -1022,7 +1071,7 @@
                         </div>
                         <div class="l-content overflow-hidden">
                             <div class="l-content__container d-flex flex-xxl-row flex-column">
-                                <div class="c-feature-img"><img src="assets/images/home/connectors.svg?dfbb9efafcf0b1187493a7e8" alt="MIL-DTL-38999" class="img-fluid c-feature-img__text" loading="lazy"></div>
+                                <div class="c-feature-img"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/connectors.svg?dfbb9efafcf0b1187493a7e8" alt="MIL-DTL-38999" class="img-fluid c-feature-img__text" loading="lazy"></div>
                                 <div class="flex-grow-1 bg-primary border d-flex flex-column">
                                     <ul class="c-feature-list list-unstyled ps-0">
                                         <li class="c-feature-item justify-content-between" data-index="0"><a href="https://www.elgens.com.tw/defense/mil-std-461g/touch-monitor-d39/flush-mount/tdm-p215wh5tagf-fnd2/" target="_blank" onclick="gtag('event', 'feature_click', { 'feature_section': 'CERTIFIED PRODUCTS', 'feature_title': 'TDM-D215' });" class="d-flex justify-content-between align-items-center w-100"><span class="fs-11">TDM-D215</span><span class="c-link-more d-flex align-items-center fs-12">More Detail<span class="c-link-more__icon material-symbols-outlined fs-6">arrow_outward</span></span></a></li>
@@ -1068,7 +1117,7 @@
                         <li class="col-lg-4 col-6 text-center border"><div class="pt-32px pb-4 px-20px h-100 d-flex flex-column"><h3 class="h1 js-counter-number c-number" data-number="30%">0</h3><p class="fw-medium fs-11 py-14px flex-grow-1 d-flex align-items-center justify-content-center">Revenue YOY.</p></div></li>
                     </ul>
                     <div class="text-center">
-                        <img src="assets/images/home/ELGENS_NCAGEcode_STEL9.jpg" style="width: 300px;" loading="lazy">
+                        <img src="https://www.elgens.com.tw/assets/images/home/ELGENS_NCAGEcode_STEL9.jpg" style="width: 300px;" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -1078,12 +1127,12 @@
             <div class="container">
                 <h2 class="display-1 fs-lg-1 fs-2 text-secondary text-center js-text-fadeup mb-lg-60px mb-40px">C<span class="text-primary">U</span>STOM SOLUTION</h2>
                 <ul class="list-unstyled row row-cols-xl-6 row-cols-lg-3 row-cols-2 g-lg-4 g-3">
-                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="assets/images/home/solution-1.svg?dfbb9efafcf0b1187493a7e8" alt="Vandal-Proof" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Vandal-Proof</h3></div></li>
-                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="assets/images/home/solution-2.svg?dfbb9efafcf0b1187493a7e8" alt="Optical Bonding" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Optical Bonding</h3></div></li>
-                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="assets/images/home/solution-3.svg?dfbb9efafcf0b1187493a7e8" alt="Cover Shielding" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Cover Shielding</h3></div></li>
-                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="assets/images/home/solution-4.svg?dfbb9efafcf0b1187493a7e8" alt="High Brightness" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">High Brightness (Fine-Tunable)</h3></div></li>
-                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="assets/images/home/solution-5.svg?dfbb9efafcf0b1187493a7e8" alt="Anti-Glare Anti-Reflection" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Anti-Glare (AG) x Anti-Reflection (AR)</h3></div></li>
-                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="assets/images/home/solution-6.svg?dfbb9efafcf0b1187493a7e8" alt="LCD Development Kit" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">LCD Development Kit</h3></div></li>
+                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/solution-1.svg?dfbb9efafcf0b1187493a7e8" alt="Vandal-Proof" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Vandal-Proof</h3></div></li>
+                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/solution-2.svg?dfbb9efafcf0b1187493a7e8" alt="Optical Bonding" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Optical Bonding</h3></div></li>
+                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/solution-3.svg?dfbb9efafcf0b1187493a7e8" alt="Cover Shielding" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Cover Shielding</h3></div></li>
+                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/solution-4.svg?dfbb9efafcf0b1187493a7e8" alt="High Brightness" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">High Brightness (Fine-Tunable)</h3></div></li>
+                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/solution-5.svg?dfbb9efafcf0b1187493a7e8" alt="Anti-Glare Anti-Reflection" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">Anti-Glare (AG) x Anti-Reflection (AR)</h3></div></li>
+                    <li class="col d-flex flex-column"><div class="card px-lg-20px px-12px py-40px border text-center flex-grow-1 d-flex flex-column align-items-center"><img src="https://www.elgens.com.tw/new_Home/assets/images/home/solution-6.svg?dfbb9efafcf0b1187493a7e8" alt="LCD Development Kit" class="mb-20px img-fluid c-feature-img" loading="lazy"><h3 class="h6 text-white d-flex align-items-center flex-grow-1">LCD Development Kit</h3></div></li>
                 </ul>
             </div>
         </section>
@@ -1194,7 +1243,7 @@
                             <a href="https://www.elgens.com.tw/test-video/" onclick="gtag('event', 'feature_click', { 'feature_section': 'PRODUCT TEST VIDEO', 'feature_title': 'View Test Videos' });" target="_blank" class="btn btn-lg c-btn-feature c-btn-feature--dark">View Test Videos <span class="ms-12px c-link-more__icon material-symbols-outlined align-text-bottom">arrow_outward</span></a>
                         </div>
                         <div class="c-feature-img">
-                            <img src="assets/images/home/test-video.png?dfbb9efafcf0b1187493a7e8" alt="product test video" class="img-fluid" loading="lazy">
+                            <img src="https://www.elgens.com.tw/new_Home/assets/images/home/test-video.png?dfbb9efafcf0b1187493a7e8" alt="product test video" class="img-fluid" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -1208,7 +1257,7 @@
                         <div class="mb-40px">
                             <h2 class="display-1 fs-lg-1 fs-2 mb-40px text-secondary js-text-fadeup">D<span class="text-primary">O</span>WNLOAD BROCHURE</h2>
                             <div class="d-lg-none c-feature-img mb-40px">
-                                <img src="assets/images/home/ELGENS_BROCHURE_DOWNLOAD.png" alt="brochure" class="img-fluid" loading="lazy">
+                                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/ELGENS_BROCHURE_DOWNLOAD.png" alt="brochure" class="img-fluid" loading="lazy">
                             </div>
                             <p>Discover ELGENS' mission-critical solutions built on cutting-edge technologies and open standards! Our innovative products deliver proven superior performance and reliability for the defense and aerospace sectors.</p>
                         </div>
@@ -1216,7 +1265,7 @@
                     </div>
                     <div class="col-lg-8 px-0 d-none d-lg-block">
                         <div class="c-feature-img">
-                            <img src="assets/images/home/ELGENS_BROCHURE_DOWNLOAD.png" alt="brochure" class="img-fluid" loading="lazy">
+                            <img src="https://www.elgens.com.tw/new_Home/assets/images/home/ELGENS_BROCHURE_DOWNLOAD.png" alt="brochure" class="img-fluid" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -1314,6 +1363,37 @@
             <a href="#contact" onclick="gtag('event', 'feature_click', { 'feature_section': 'Float Tools', 'feature_title': 'Contact' });" class="btn btn-primary py-2 px-20px breathing-btn" id="contact-link"><span>Contact</span></a>
         </div>
     </div>
+
+    <!-- ══ 右側浮動活動按鈕：桌機 v / hover v-on；手機 sq / 觸擊 sq-on ══ -->
+    <a href="https://www.elgens.com.tw/defense-events" target="_blank" rel="noopener"
+       class="l-event-float" id="event-float-btn" aria-label="ELGENS Defense Events"
+       onclick="gtag('event', 'feature_click', { 'feature_section': 'Float Tools', 'feature_title': 'Defense Events' });">
+        <span class="l-event-float__stack">
+            <picture>
+                <source media="(max-width: 991.98px)" srcset="https://www.elgens.com.tw/new_Home/assets/images/home/euronaval-2026-sq.jpg">
+                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/euronaval-2026-v.jpg" alt="EURONAVAL 2026 - Paris Nord Villepinte, 3-6 Nov">
+            </picture>
+            <picture class="l-event-float__hover" aria-hidden="true">
+                <source media="(max-width: 991.98px)" srcset="https://www.elgens.com.tw/new_Home/assets/images/home/euronaval-2026-sq-on.jpg">
+                <img src="https://www.elgens.com.tw/new_Home/assets/images/home/euronaval-2026-v-on.jpg" alt="">
+            </picture>
+        </span>
+    </a>
+    <script>
+    (function () {
+      var btn = document.getElementById('event-float-btn');
+      if (!btn) return;
+      /* iOS Safari：touchstart 時若有元素「變為可見」，會被當成 hover 選單而取消 click。
+         所以改在 click（點擊已確立、連結照常另開）之後才切換成觸擊圖。 */
+      var timer;
+      btn.addEventListener('click', function () {
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+        clearTimeout(timer);
+        btn.classList.add('is-pressed');
+        timer = setTimeout(function () { btn.classList.remove('is-pressed'); }, 800);
+      });
+    })();
+    </script>
 
 <!-- ★ 底部 JS：全部移除 defer，保持原始順序確保 GSAP 和互動功能正常 -->
 <script src="assets/vendor/jquery/dist/jquery.min.js?dfbb9efafcf0b1187493a7e8"></script>
